@@ -24,6 +24,11 @@ company and address is `*.example.com`). Stills: [Today](docs/demo/today.png) ·
 capture is reproducible: `console/tests/demo-tour.mjs` drives a fixtures-only
 server (`COCKPIT_FIXTURES=1`) with Playwright.
 
+![The vault rendered as a navigable 3D knowledge graph](docs/demo/vault.gif)
+
+The vault rendered as a navigable 3D knowledge graph — every folder a star,
+its files swarming around it (the console's Vault tab).
+
 ## What it is
 
 Velab sells laboratory equipment and reaches distributors through an outbound
@@ -109,31 +114,32 @@ does the bookkeeping a CRM would ask a human to maintain by hand.
 
 ## The system in production (aggregates as of 2026-07-17)
 
-These are real aggregate figures from the live private deployment. Every
-identifying detail — names, domains, addresses, deal values, event-tied dates —
-is excluded by construction; only the counts below are published.
+What the system has actually done, from the live private deployment, followed
+down the funnel from a raw lead to a booked meeting. Every identifying detail —
+names, domains, addresses, deal values, event-tied dates — is excluded by
+construction; only the aggregate counts below are published.
 
-| Metric | Value |
+| Stage of the work | Figure |
 |---|---|
-| Companies tracked by the truth engine | 933 (305 actionable) |
-| Deep company dossiers maintained | 54 |
+| Leads sourced | 1,601 |
+| Leads verified (ICP + deliverability) | 742 |
+| Companies contacted (at least one outbound) | 328 |
+| People contacted (distinct addresses) | 353 |
 | Outbound emails sent through the gated pipeline | 1,062 across 90 batches |
-| Leads sourced → verified | 1,601 sourced → 742 verified |
-| Countries / markets covered | 15+ (LatAm, US, SE Asia, Africa) |
-| Inbound corpus | 80 daily snapshots since inception, 65 threads tracked |
-| LLM inbox verdicts on file | 108 |
-| RFP / procurement source-map states | 3 (TX, FL, GA), 185+ artifacts mapped |
-| Do-not-contact / suppression entries honored | 389 |
-| Truth engine | ~4,100 lines of Python across 12 `core/` modules |
-| Operator console | ~16,900 lines across 105 tracked `src/` files |
-| LLM shell | 4 skills, 4 slash-commands, 1 model-dispatch entrypoint |
-| Backup cadence | 4x/day mirror + snapshot + private push |
-| Backup commits in the private mirror | 1,220+ |
-| Production systemd timers / services | 10 timers, 12 services |
-| Operator audit reports written | 33 |
+| — of those, follow-ups and nudges | 626 |
+| Companies that replied | 46 |
+| Meetings held (companies reaching the meeting stage) | 7 held (15 scheduled) |
+| Procurement contacts mapped for public bids | 10,000+ across 3 US states (TX, FL, GA) |
+| Countries / markets reached | 15+ (LatAm, US, SE Asia, Africa) |
+| Do-not-contact requests honored | 389 |
+| Engine + console size | ~4,100 lines of Python (deterministic engine) · ~16,900 lines of TypeScript (console) |
+| Off-server durability | 4x/day mirror + snapshot + private push, 1,200+ commits |
 
-The methodology and exact commands behind each figure were computed read-only
-against the private backup tree; nothing beyond these aggregates left it.
+Every figure was computed read-only against the private backup tree; each was
+cross-checked against a second source where one exists (replies, for example,
+reconcile the truth engine's board against the inbound thread transcripts), and
+the conservative number was published when sources differed. Nothing beyond
+these aggregates left the backup.
 
 ## Architecture
 
