@@ -1,0 +1,25 @@
+# ── Node / Next.js (console/) ────────────────────────────────────────────
+# Belt-and-suspenders alongside console/.gitignore: these must never be swept
+# into the public repo by a `git add -A` from the root.
+node_modules/
+.next/
+out/
+.pnp
+.pnp.*
+
+# ── Test / capture artifacts ─────────────────────────────────────────────
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+*.webm
+
+# ── Python bytecode ──────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+
+# ── Misc ─────────────────────────────────────────────────────────────────
+.DS_Store
+*.log
+.env
+.env*.local

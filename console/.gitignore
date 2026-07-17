@@ -1,0 +1,24 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js build output
+/.next/
+/out/
+next-env.d.ts
+
+# playwright / test artifacts
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+# recorded demo-tour videos are captured to a scratch dir, but ignore any
+# that land in-tree (webm is Playwright's raw recording format)
+*.webm
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+.env*.local

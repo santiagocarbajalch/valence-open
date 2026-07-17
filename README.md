@@ -14,6 +14,16 @@ memory contract.
 > the live system runs from a separate private repository. This is published as
 > a portfolio and architecture artifact, not a turnkey installable product.
 
+## Demo
+
+![Valence console — a tour of the Today, Pipeline, and Scraping tabs](docs/demo/demo.gif)
+
+A ~27-second tour of the console running on synthetic fixture data (every
+company and address is `*.example.com`). Stills: [Today](docs/demo/today.png) ·
+[Pipeline](docs/demo/pipeline.png) · [Scraping](docs/demo/scraping.png). The
+capture is reproducible: `console/tests/demo-tour.mjs` drives a fixtures-only
+server (`COCKPIT_FIXTURES=1`) with Playwright.
+
 ## What it is
 
 Velab sells laboratory equipment and reaches distributors through an outbound
@@ -32,6 +42,98 @@ model around it:
 
 The name "Valence" refers to the OS layer that coordinates the agents and the
 memory they share.
+
+## Design: a console a stranger could run
+
+The console has one acceptance test that outranks every visual choice: **a
+stranger with no context could sit down and run the business from it.** The
+design doctrine states it literally — every user-facing sentence "reads like a
+normal email tool a stranger could operate." Workflow words are fine (nudge,
+stage, freeze, thread); machinery words are banned — no engine names, file names,
+enum values, timestamps, or count-only shorthand. "If a stranger would ask 'what
+does that mean?', it fails."
+
+That rule is enforced, not remembered. A copy linter fails the build when
+console-speak reaches a user-facing string, and every board-derived sentence is
+generated in exactly one module (a "sentence factory") so the language stays
+consistent as surfaces multiply. Four more tenets shape everything else:
+
+- **No display-only features.** Every button, chip, and link does what it says,
+  end-to-end, the day it ships. A control that only changes pixels is removed or
+  finished — never merged as decoration. Its siblings: *count = filter* (if the
+  number says 16, clicking it shows 16) and *controls never lie about scope*
+  (a bulk button names the real count).
+- **Refresh on activity, never on timers.** Data reloads because something
+  happened — a mutation, newly detected mail — not because N seconds passed.
+  Anything that spends model tokens fires only from an explicit click that states
+  its cost; there is no always-on sidecar chat.
+- **The rail classifies; the pane acts.** The left list files companies into
+  groups and never funnels you into one action. Opening a company shows the full
+  action set with the engine's reasoning beside it. "A classification is a
+  suggestion, never a chute."
+- **Weight follows the next step.** Exactly one primary button per pane — the
+  recommended next action; destructive actions are never the loudest. Explainer
+  prose hides behind a "?" so a surface reads as labels, not walls of text.
+
+The current look ("FRONT OFFICE" — navy workflow sidebar, Hanken Grotesk + Red
+Hat Mono) is the latest of roughly a dozen design eras, each recorded as one
+paragraph in [`console/DESIGN-LINEAGE.md`](console/DESIGN-LINEAGE.md). The full
+rule set is [`console/CONSOLE-DOCTRINE.md`](console/CONSOLE-DOCTRINE.md); the long
+version of this section is [`docs/DESIGN.md`](docs/DESIGN.md).
+
+## What the console is for
+
+Everything the operator needs to run the day lives on **one desk** — one screen,
+one authority, no swivel-chairing between tools:
+
+- **Today board** — every company that needs a decision, filed into plain groups
+  (owed a reply, gone quiet, close-outs, cold due, bid desk, added today, set
+  aside). Counters double as filters into their exact rows.
+- **Reply desk** — open a warm reply and the full action set is right there:
+  draft with the model, revise in place, attach, stage, set a meeting, freeze,
+  or close out — with the engine's reasoning shown beside each.
+- **Pipeline** — the same companies partitioned into engine stages, for a
+  portfolio view of where everything sits.
+- **Mining** — lead sourcing and qualification, run on demand, landing verified
+  leads into the vault.
+- **Files / knowledge graph** — the vault rendered as a navigable map so the
+  operator can see the system of record, not just query it.
+- **Chat** — the model baked into the features that need it (draft, revise,
+  investigate), never a detached assistant guessing at state.
+
+This is an **operator console, not a SaaS CRM**, on purpose. A CRM stores what a
+human types and trusts it; this console computes the truth from the mail provider
+and shows the human a certified board. The operator's job is judgment and
+authority — read the reply, approve the send — while the deterministic engine
+does the bookkeeping a CRM would ask a human to maintain by hand.
+
+## The system in production (aggregates as of 2026-07-17)
+
+These are real aggregate figures from the live private deployment. Every
+identifying detail — names, domains, addresses, deal values, event-tied dates —
+is excluded by construction; only the counts below are published.
+
+| Metric | Value |
+|---|---|
+| Companies tracked by the truth engine | 933 (305 actionable) |
+| Deep company dossiers maintained | 54 |
+| Outbound emails sent through the gated pipeline | 1,062 across 90 batches |
+| Leads sourced → verified | 1,601 sourced → 742 verified |
+| Countries / markets covered | 15+ (LatAm, US, SE Asia, Africa) |
+| Inbound corpus | 80 daily snapshots since inception, 65 threads tracked |
+| LLM inbox verdicts on file | 108 |
+| RFP / procurement source-map states | 3 (TX, FL, GA), 185+ artifacts mapped |
+| Do-not-contact / suppression entries honored | 389 |
+| Truth engine | ~4,100 lines of Python across 12 `core/` modules |
+| Operator console | ~16,900 lines across 105 tracked `src/` files |
+| LLM shell | 4 skills, 4 slash-commands, 1 model-dispatch entrypoint |
+| Backup cadence | 4x/day mirror + snapshot + private push |
+| Backup commits in the private mirror | 1,220+ |
+| Production systemd timers / services | 10 timers, 12 services |
+| Operator audit reports written | 33 |
+
+The methodology and exact commands behind each figure were computed read-only
+against the private backup tree; nothing beyond these aggregates left it.
 
 ## Architecture
 
@@ -92,54 +194,61 @@ reads them and shells out to the engine and to workspace tools; the LLM shell's
 skills and commands operate over the same files. Nothing holds private state in
 memory that isn't recoverable from the vault plus the mail provider.
 
-## Design principles
+## Architecture philosophy
 
-These are the ideas worth studying; the code exists to enforce them.
+These are the ideas worth studying; the code exists to enforce them. The full
+treatment, with the reasoning behind each, is in
+[`docs/PHILOSOPHY.md`](docs/PHILOSOPHY.md). They all answer one question: *how do
+you put a language model in charge of real work without letting it quietly
+corrupt the state of the business?*
 
 - **No LLM in the runtime.** Recurring work must reduce to deterministic code or
-  an explicit operator action. A model that reads the inbox "every morning" is a
-  design failure. One-shot audits that produce code changes are fine; a model in
-  a loop making routine decisions is not. This keeps behavior reproducible and
-  cheap.
+  an explicit operator action. A model reading the inbox "every morning" on a
+  timer is a design failure; a one-shot audit that produces a code change is
+  fine. This keeps behavior reproducible, certifiable, and cheap. The whole
+  `core/` engine has no model call in its path.
 
-- **Send is default-DENY.** The SMTP path refuses to send unless a standalone,
-  explicit operator approval exists for that specific batch. Answering a
-  question, printing a draft, or saying "looks good" is never approval. The
-  approval is a separate act, gated in code (`console/src/lib/sendGuard.ts`,
-  and the approvals contract in the state layer).
+- **Send is default-DENY, and no model output is approval.** The outbound path
+  refuses unless a standalone, explicit operator approval exists for that exact
+  batch. Answering a question, printing a draft, or a model deciding a message
+  "looks ready" is never approval. It is the one authority never delegated
+  (`console/src/lib/sendGuard.ts`, the `api/send` route).
 
 - **Company-level truth.** The unit of the business is the registrable domain,
-  not the email address. A reply from any sibling address at a company counts as
-  that company replying. Cadence, stage, and "whose turn is it" are all computed
-  at the company level (`core/identity.py`, `core/truth.py`).
+  not the email address. A reply from any sibling address counts as that company
+  replying; cadence and "whose turn is it" are computed per company
+  (`core/identity.py`, `core/truth.py`, `console/src/lib/companyKey.ts`).
 
-- **External truth beats local caches.** What was actually sent is whatever is in
-  the provider's Sent box, full stop. Local records are a partial mirror; when
-  they disagree with the provider, the provider wins. A dedicated parity engine
-  continuously proves the local corpus still mirrors the provider, instead of
-  assuming it (`core/parity.py`).
+- **External truth beats local caches.** What was sent is whatever is in the
+  provider's Sent box, full stop. A dedicated parity engine continuously *proves*
+  the local corpus still mirrors the provider instead of assuming it
+  (`core/parity.py`).
 
-- **Adversarial certification.** The board the operator sees is not trusted just
-  because a function produced it. A separate certifier re-derives and challenges
+- **Adversarial certification, fail-loud auditors.** The board is not trusted
+  because a function produced it; a separate certifier re-derives and challenges
   it, and an auditor cross-checks planes for contradictions and fails loudly
-  rather than silently degrading (`core/certify.py`, `core/auditor.py`).
+  rather than degrading silently (`core/certify.py`, `core/auditor.py`).
 
-- **Operator-authority model.** Authority is a revocable grant with hard guards
-  that never move. Console-fired runs are innately approved (the operator clicked
-  it); an agent's concern is one advisory line, not a refusal. The send gate is
-  the one exception that is never delegated.
+- **Plain files are the system of record.** Durable state is Markdown dossiers,
+  JSON registries, and JSONL logs a human can read — not an opaque database.
+  Operator decisions live in vault files the engine reads as the last word, and
+  one-writer-per-state is pinned in
+  [`docs/STATE-CONTRACT.md`](docs/STATE-CONTRACT.md).
 
-- **Cross-model memory contract.** The LLM shell is provider-agnostic. Every
-  model reaches the same skills, commands, and a shared memory store through one
-  dispatch point (`llm-shell/bin/llm` + `backend.conf`). Swapping the model is a
-  one-line change; the skills, commands, and memory are plain files any harness
-  can read. This is what lets different models coordinate on the same work.
+- **Cross-model LLM shell.** The LLM layer is provider-agnostic: every model
+  reaches the same skills, commands, and memory through one dispatch point, and
+  swapping the model is a one-line change (`llm-shell/bin/llm`,
+  `llm-shell/backend.conf`). The model is a replaceable part, not the foundation.
 
-- **Wipe-guard backups.** Off-server durability runs on a schedule: local
-  snapshots plus a push to a private mirror, with a value-based secret scan that
-  aborts the push if anything credential-shaped reaches the staging tree, and
-  exclude rules that keep secrets out of the mirror by construction
-  (`ops/velab_vault_push.sh`, `ops/velab_backup.sh`).
+- **Wipe-guarded backups.** Off-server durability runs on a schedule with a
+  value-based secret scan that aborts the push if anything credential-shaped
+  reaches the staging tree, plus a guard that refuses to mirror a suspiciously
+  emptied tree (`ops/velab_vault_push.sh`, `ops/velab_backup.sh`).
+
+- **Operator decides, agents work.** A console action carries the operator's
+  approval by the click; an agent's concern is one advisory line, never a
+  refusal — with the single permanent exception that sending always passes the
+  full send gate.
 
 ## Repository map
 
@@ -153,6 +262,7 @@ console/         Next.js + TypeScript operator console.
                  src/components/  cockpit, pipeline, vault graph, activity log
                  src/lib/        send guard, company key, vault helpers, jobs
                  tests/          Playwright smoke test + synthetic fixtures
+                 CONSOLE-DOCTRINE.md · DESIGN-LINEAGE.md · COCKPIT-V4.md
 
 llm-shell/       The provider-agnostic LLM shell ("Valence").
                  START-HERE.md   orientation for any model pointed at the system
@@ -166,6 +276,8 @@ ops/             Backup and off-server durability engineering.
                  velab_vault_push.sh    secret-scanning push to a private mirror
 
 docs/            Architecture documents.
+                 DESIGN.md              the console design story, long version
+                 PHILOSOPHY.md          the principles, with code pointers
                  VAULT-LAYOUT.md        the excluded data layer, described
                  STATE-CONTRACT.md      one-writer-per-state map
                  VENUSV2-MASTER-PLAN.md agent/kernel design spec
@@ -193,7 +305,9 @@ shape and real provider credentials.
 Every included file was scanned and sanitized: real people, companies, email
 addresses, domains, phone numbers, credentials, and network identifiers were
 removed or replaced with `example.com`-style placeholders and synthetic data.
-Test fixtures were rebuilt as fully synthetic data. See `docs/VAULT-LAYOUT.md`
+Test fixtures were rebuilt as fully synthetic data. The production figures in
+"The system in production" are aggregate counts only, computed read-only against
+a private backup with all identifying data excluded. See `docs/VAULT-LAYOUT.md`
 for the data model and the individual documents' sanitization notes.
 
 ## License
