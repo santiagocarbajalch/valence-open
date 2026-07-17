@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# llm — Valence's single headless-LLM dispatch point.
+#
+# Every batch/cron agent on this VPS calls THIS instead of a provider binary,
+# so plugging a different model in = editing ../backend.conf (one line),
+# never touching callsites. Interactive surfaces (console chat) are separate
+# and documented in ../START-HERE.md.
+#
+# Interface: identical to the flags our callsites already use —
+#   llm -p [prompt] [--allowedTools "..."] [--permission-mode M] [--output-format text]
+# stdin passes through; exit code is the backend's exit code.
+#
+# Adding a backend: add a case below that maps these flags onto the new
+# provider's CLI/API, set BACKEND in backend.conf, run:
+#   echo ok | llm -p --allowedTools "" --output-format text
+set -uo pipefail
+
+SHELL_DIR="$(dirname "$(readlink -f "$0")")/.."
+CONF="$SHELL_DIR/backend.conf"
+
+# defaults (overridden by backend.conf)
+BACKEND=claude-cli
+BIN=/usr/bin/claude
+MODEL=""
+[ -f "$CONF" ] && . "$CONF"
+
+case "$BACKEND" in
+  claude-cli)
+    EXTRA=()
+    [ -n "$MODEL" ] && EXTRA+=(--model "$MODEL")
+    exec "$BIN" "$@" "${EXTRA[@]}"
+    ;;
+  *)
+    echo "llm: unknown BACKEND '$BACKEND' in $CONF — add an adapter case in $0" >&2
+    exit 64
+    ;;
+esac

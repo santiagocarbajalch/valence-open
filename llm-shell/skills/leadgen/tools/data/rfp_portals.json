@@ -1,0 +1,316 @@
+{
+  "_meta": {
+    "description": "Licitador portal registry. Each entry: where to look, what to search for, and any known scraping notes. Operator and Licitador both extend this over time.",
+    "version": 1,
+    "last_updated": "2026-05-20"
+  },
+  "portals": [
+    {
+      "id": "sam-gov",
+      "name": "SAM.gov",
+      "tier": "US-Federal",
+      "country": "USA",
+      "url": "https://sam.gov/content/opportunities",
+      "search_url_template": "https://sam.gov/search/?index=opp&q={query}",
+      "registration_required_to_view": false,
+      "registration_required_to_bid": true,
+      "registration_notes": "SAM.gov active registration with valid CAGE / UEI is required to submit. Confirm VELAB is registered before flagging an RFP as immediately actionable.",
+      "naics_codes_useful": ["334516", "334513", "339112", "423450", "325413"],
+      "default_keywords": ["microscope", "centrifuge", "spectrophotometer", "laboratory equipment", "scientific instrument", "analytical balance", "lab balance"],
+      "scrape_method": "browser (Playwright); use ultra-scraping",
+      "notes": "Filter by opportunity type = Solicitation. Pay attention to set-asides (8(a), WOSB, SDVOSB, HUBZone) — flag for operator if VELAB doesn't qualify."
+    },
+    {
+      "id": "fedconnect",
+      "name": "FedConnect",
+      "tier": "US-Federal",
+      "country": "USA",
+      "url": "https://www.fedconnect.net/FedConnect/PublicPages/PublicSearch/Public_Opportunities.aspx",
+      "registration_required_to_view": false,
+      "registration_required_to_bid": true,
+      "default_keywords": ["laboratory equipment", "microscope", "centrifuge"],
+      "scrape_method": "browser (Playwright)"
+    },
+    {
+      "id": "dla-dibbs",
+      "name": "DLA DIBBS",
+      "tier": "US-Federal",
+      "country": "USA",
+      "url": "https://www.dibbs.bsm.dla.mil/",
+      "registration_required_to_view": false,
+      "registration_required_to_bid": true,
+      "default_keywords": ["microscope", "centrifuge", "balance", "spectrophotometer"],
+      "scrape_method": "browser (Playwright)",
+      "notes": "Defense Logistics Agency — small-quantity recurring orders for VA, DoD labs."
+    },
+    {
+      "id": "tx-esbd",
+      "name": "Texas Electronic State Business Daily (ESBD)",
+      "tier": "US-State",
+      "country": "USA",
+      "state": "Texas",
+      "url": "https://www.txsmartbuy.gov/esbd",
+      "registration_required_to_view": false,
+      "registration_required_to_bid": "Centralized Master Bidders List (CMBL) registration recommended for state agencies",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment", "scientific equipment", "balance"],
+      "scrape_method": "browser (Playwright)",
+      "notes": "Texas is high-priority territory (Velab HQ in Pharr). Local-state preference advantage."
+    },
+    {
+      "id": "ca-eprocure",
+      "name": "Cal eProcure",
+      "tier": "US-State",
+      "country": "USA",
+      "state": "California",
+      "url": "https://caleprocure.ca.gov/pages/index.aspx",
+      "registration_required_to_view": false,
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "myfl-marketplace",
+      "name": "MyFloridaMarketPlace",
+      "tier": "US-State",
+      "country": "USA",
+      "state": "Florida",
+      "url": "https://www.myfloridamarketplace.com/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "bidnet",
+      "name": "BidNet Direct",
+      "tier": "US-Local-Aggregator",
+      "country": "USA",
+      "url": "https://www.bidnetdirect.com/",
+      "registration_required_to_view": true,
+      "registration_notes": "Free registration to view; paid tier for full alerts. Operator must register VELAB.",
+      "default_keywords": ["microscope", "laboratory equipment", "centrifuge", "balance"],
+      "scrape_method": "browser (Playwright); requires login"
+    },
+    {
+      "id": "planetbids",
+      "name": "PlanetBids",
+      "tier": "US-Local-Aggregator",
+      "country": "USA",
+      "url": "https://www.planetbids.com/",
+      "default_keywords": ["microscope", "laboratory equipment", "centrifuge"]
+    },
+    {
+      "id": "demandstar",
+      "name": "DemandStar",
+      "tier": "US-Local-Aggregator",
+      "country": "USA",
+      "url": "https://network.demandstar.com/",
+      "registration_required_to_view": true,
+      "default_keywords": ["microscope", "laboratory equipment", "centrifuge"]
+    },
+    {
+      "id": "publicpurchase",
+      "name": "PublicPurchase",
+      "tier": "US-Local-Aggregator",
+      "country": "USA",
+      "url": "https://www.publicpurchase.com/",
+      "default_keywords": ["microscope", "laboratory equipment", "centrifuge"]
+    },
+    {
+      "id": "ionwave",
+      "name": "IonWave Technologies",
+      "tier": "US-Local-Aggregator",
+      "country": "USA",
+      "url": "https://www.ionwave.net/",
+      "default_keywords": ["microscope", "laboratory equipment", "centrifuge"]
+    },
+    {
+      "id": "tips-usa",
+      "name": "TIPS-USA (The Interlocal Purchasing System)",
+      "tier": "US-K12-Cooperative",
+      "country": "USA",
+      "url": "https://www.tips-usa.com/",
+      "notes": "Multistate K-12 + higher-ed cooperative. Once VELAB is on a TIPS contract, member agencies can purchase without separate RFP. Operator-led action: pursue TIPS award."
+    },
+    {
+      "id": "sourcewell",
+      "name": "Sourcewell",
+      "tier": "US-K12-Cooperative",
+      "country": "USA",
+      "url": "https://www.sourcewell-mn.gov/",
+      "notes": "National K-12 + government cooperative. Operator-led: pursue Sourcewell award."
+    },
+    {
+      "id": "buyboard",
+      "name": "Buyboard (Texas Local Government Purchasing Cooperative)",
+      "tier": "US-K12-Cooperative",
+      "country": "USA",
+      "state": "Texas",
+      "url": "https://www.buyboard.com/"
+    },
+    {
+      "id": "omnia-partners",
+      "name": "OMNIA Partners",
+      "tier": "US-K12-Cooperative",
+      "country": "USA",
+      "url": "https://www.omniapartners.com/"
+    },
+    {
+      "id": "tx-buys",
+      "name": "TexasBuys",
+      "tier": "US-University",
+      "country": "USA",
+      "state": "Texas",
+      "url": "https://www.txsmartbuy.gov/",
+      "default_keywords": ["microscope", "centrifuge", "spectrophotometer", "balance"]
+    },
+    {
+      "id": "ut-buyspeed",
+      "name": "University of Texas BuySpeed",
+      "tier": "US-University",
+      "country": "USA",
+      "state": "Texas",
+      "url": "https://www.utsystem.edu/offices/supply-chain-management"
+    },
+    {
+      "id": "secop-co",
+      "name": "SECOP (Sistema Electrónico de Contratación Pública)",
+      "tier": "International-LATAM",
+      "country": "Colombia",
+      "url": "https://www.colombiacompra.gov.co/secop",
+      "default_keywords": ["microscopio", "centrífuga", "balanza analítica", "espectrofotómetro", "equipos de laboratorio", "material de laboratorio"],
+      "notes": "SECOP II for transactional; SECOP I for older notices. Colombia Compra Eficiente is the central agency."
+    },
+    {
+      "id": "seace-pe",
+      "name": "SEACE (Sistema Electrónico de Contrataciones del Estado)",
+      "tier": "International-LATAM",
+      "country": "Peru",
+      "url": "https://www.gob.pe/seace",
+      "default_keywords": ["microscopio", "centrífuga", "balanza", "espectrofotómetro", "equipos de laboratorio"]
+    },
+    {
+      "id": "chilecompra",
+      "name": "Mercado Público / ChileCompra",
+      "tier": "International-LATAM",
+      "country": "Chile",
+      "url": "https://www.mercadopublico.cl/",
+      "default_keywords": ["microscopio", "centrífuga", "balanza", "espectrofotómetro", "equipos de laboratorio"]
+    },
+    {
+      "id": "comprar-ar",
+      "name": "COMPR.AR",
+      "tier": "International-LATAM",
+      "country": "Argentina",
+      "url": "https://comprar.gob.ar/",
+      "default_keywords": ["microscopio", "centrífuga", "balanza", "espectrofotómetro", "equipos de laboratorio"]
+    },
+    {
+      "id": "comprasnet-br",
+      "name": "Comprasnet",
+      "tier": "International-LATAM",
+      "country": "Brazil",
+      "url": "https://www.gov.br/compras/pt-br/",
+      "default_keywords": ["microscópio", "centrífuga", "balança", "espectrofotômetro", "equipamentos de laboratório"]
+    },
+    {
+      "id": "soce-ec",
+      "name": "SOCE / Compras Públicas Ecuador",
+      "tier": "International-LATAM",
+      "country": "Ecuador",
+      "url": "https://www.compraspublicas.gob.ec/",
+      "default_keywords": ["microscopio", "centrífuga", "balanza", "espectrofotómetro", "equipos de laboratorio"]
+    },
+    {
+      "id": "sicop-cr",
+      "name": "SICOP",
+      "tier": "International-LATAM",
+      "country": "Costa Rica",
+      "url": "https://www.sicop.go.cr/",
+      "default_keywords": ["microscopio", "centrífuga", "balanza", "equipos de laboratorio"]
+    },
+    {
+      "id": "panama-compra",
+      "name": "PanamaCompra",
+      "tier": "International-LATAM",
+      "country": "Panama",
+      "url": "https://www.panamacompra.gob.pa/",
+      "default_keywords": ["microscopio", "centrífuga", "balanza", "equipos de laboratorio"]
+    },
+    {
+      "id": "ted-eu",
+      "name": "TED (Tenders Electronic Daily)",
+      "tier": "International-EU",
+      "country": "EU",
+      "url": "https://ted.europa.eu/",
+      "default_keywords": ["microscope", "centrifuge", "spectrophotometer", "laboratory equipment"]
+    },
+    {
+      "id": "uk-contracts-finder",
+      "name": "Contracts Finder + Find a Tender",
+      "tier": "International-EU",
+      "country": "UK",
+      "url": "https://www.contractsfinder.service.gov.uk/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "etender-za",
+      "name": "National Treasury eTender Portal",
+      "tier": "International-Africa",
+      "country": "South Africa",
+      "url": "https://www.etenders.gov.za/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "ppip-ke",
+      "name": "Public Procurement Information Portal Kenya",
+      "tier": "International-Africa",
+      "country": "Kenya",
+      "url": "https://tenders.go.ke/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "etimad-sa",
+      "name": "Etimad",
+      "tier": "International-MENA",
+      "country": "Saudi Arabia",
+      "url": "https://etimad.sa/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "tejari-ae",
+      "name": "Tejari",
+      "tier": "International-MENA",
+      "country": "UAE",
+      "url": "https://www.tejari.com/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "austender",
+      "name": "AusTender",
+      "tier": "International-APAC",
+      "country": "Australia",
+      "url": "https://www.tenders.gov.au/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "buyandsell-ca",
+      "name": "BuyandSell.gc.ca",
+      "tier": "International-APAC",
+      "country": "Canada",
+      "url": "https://buyandsell.gc.ca/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    },
+    {
+      "id": "philgeps",
+      "name": "PhilGEPS",
+      "tier": "International-APAC",
+      "country": "Philippines",
+      "url": "https://www.philgeps.gov.ph/",
+      "default_keywords": ["microscope", "centrifuge", "laboratory equipment"]
+    }
+  ],
+  "excluded_portals": [
+    {
+      "id": "compranet-mx",
+      "name": "COMPRANET",
+      "country": "Mexico",
+      "reason": "Mexico is the exclusive territory of the parent company. Never scrape any Mexican procurement portal."
+    }
+  ]
+}

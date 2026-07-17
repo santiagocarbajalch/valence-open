@@ -1,0 +1,9 @@
+{
+  "manufacturer_hq": [
+    "example-manufacturer-1.com",
+    "example-manufacturer-2.com"
+  ],
+  "off_icp": [
+    "example-off-icp.com"
+  ]
+}

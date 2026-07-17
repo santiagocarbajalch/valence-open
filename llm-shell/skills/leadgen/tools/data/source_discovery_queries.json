@@ -1,0 +1,693 @@
+{
+ "_meta": {
+  "description": "Per-category search query templates for source_discovery.py. Operator extends as new lead-source patterns are validated. Placeholders: {country}, {country_lang} (es/pt/en local-language form), {country_code} (ISO), {region}.",
+  "version": 1,
+  "last_updated": "2026-06-11",
+  "last_category_expansion": "20260608-214038"
+ },
+ "categories": {
+  "lab-equipment-distributor": {
+   "label": "Lab equipment distributors (non-US)",
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Brazil": "pt",
+    "Spain": "es",
+    "Mexico": "BLOCKED",
+    "Dominican Republic": "es",
+    "Morocco": "en",
+    "Jordan": "en",
+    "Bahrain": "en",
+    "United Arab Emirates": "en",
+    "Saudi Arabia": "en",
+    "Egypt": "en",
+    "Guatemala": "es",
+    "Honduras": "es",
+    "El Salvador": "es",
+    "Nicaragua": "es"
+   },
+   "queries_en": [
+    "lab equipment distributor {country} site:.com",
+    "scientific instruments importer {country}",
+    "laboratory equipment supplier {country} contact",
+    "microscope distributor {country}",
+    "centrifuge supplier {country}",
+    "analytical balance distributor {country}",
+    "spectrophotometer reseller {country}",
+    "scientific equipment supplier {country}",
+    "laboratory reagents distributor {country}",
+    "lab consumables supplier {country}",
+    "analytical instruments dealer {country}",
+    "laboratory glassware supplier {country}",
+    "authorized distributor laboratory equipment {country}",
+    "laboratory equipment importer representative {country}",
+    "where to buy laboratory equipment {country} distributor",
+    "sole agent laboratory scientific equipment {country}",
+    "medical and laboratory equipment supplier {country}"
+   ],
+   "queries_es": [
+    "distribuidor equipos de laboratorio {country}",
+    "importador material de laboratorio {country}",
+    "proveedor equipos científicos {country}",
+    "representante microscopios {country}",
+    "venta balanzas analíticas {country}",
+    "distribuidor espectrofotómetros {country}",
+    "ventas equipos laboratorio contacto {country}",
+    "venta equipos de laboratorio {country}",
+    "suministros de laboratorio {country}",
+    "reactivos químicos distribuidor {country}",
+    "instrumentación analítica {country}",
+    "equipamiento científico proveedor {country}",
+    "material de vidrio laboratorio {country}",
+    "distribuidor centrífugas {country}",
+    "incubadoras laboratorio venta {country}",
+    "autoclaves equipos laboratorio {country}",
+    "balanzas de precisión distribuidor {country}",
+    "distribuidor insumos laboratorio clínico {country}",
+    "importadora equipos científicos {country}",
+    "casa comercial equipos laboratorio {country}",
+    "proveedor consumibles laboratorio {country}",
+    "distribuidores autorizados equipos laboratorio {country}",
+    "importador representante equipos laboratorio {country}",
+    "donde comprar equipos de laboratorio {country} distribuidor",
+    "casa importadora equipos cientificos {country}",
+    "representante de marcas equipos de laboratorio {country}",
+    "distribuidor equipos medicos y de laboratorio {country}",
+    "proveedor instrumental laboratorio clinico {country}"
+   ],
+   "queries_pt": [
+    "distribuidor equipamentos laboratoriais {country}",
+    "importador material laboratório {country}",
+    "fornecedor equipamentos científicos {country}",
+    "representante microscópios {country}",
+    "fornecedor reagentes laboratório {country}",
+    "distribuidor vidraria laboratório {country}",
+    "equipamentos analíticos {country}",
+    "balanças analíticas fornecedor {country}",
+    "instrumentos científicos distribuidor {country}"
+   ],
+   "directory_seeds": [
+    "https://www.paginasamarillas.com.pe/empresas?q=laboratorio",
+    "https://www.paginasamarillas.com.co/empresas?q=laboratorio",
+    "https://www.paginasamarillas.com.ar/empresas?q=laboratorio",
+    "https://www.hotfrog.com.{tld}/companies/laboratory",
+    "https://www.guialocal.com.{tld}/buscar?q=laboratorio"
+   ]
+  },
+  "k12-public-school-district": {
+   "label": "K-12 public school districts (USA)",
+   "languages_by_country": {
+    "default": "en"
+   },
+   "queries_en": [
+    "{state} school district purchasing department director",
+    "{state} ISD procurement coordinator",
+    "{state} public schools chief financial officer purchasing",
+    "{state} school board purchasing buyer contact",
+    "site:{state}.gov K-12 procurement"
+   ],
+   "directory_seeds": [
+    "https://www.txsmartbuy.gov/esbd",
+    "https://www.buyboard.com/",
+    "https://www.tips-usa.com/"
+   ]
+  },
+  "public-university": {
+   "label": "Public universities (USA + global)",
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Brazil": "pt"
+   },
+   "queries_en": [
+    "{country} public university purchasing department contact",
+    "{country} state university procurement office",
+    "site:.edu purchasing director {region}",
+    "{country} public university chief procurement officer"
+   ],
+   "queries_es": [
+    "universidad pública {country} departamento de compras",
+    "universidad nacional {country} adquisiciones contacto"
+   ]
+  },
+  "private-university": {
+   "label": "Private universities + research institutes",
+   "languages_by_country": {
+    "default": "en"
+   },
+   "queries_en": [
+    "{country} private university procurement office",
+    "{country} research institute purchasing contact",
+    "{country} biomedical research center procurement"
+   ],
+   "queries_es": [
+    "universidad privada {country} compras",
+    "centro de investigación {country} adquisiciones"
+   ]
+  },
+  "community-college": {
+   "label": "Community + technical colleges (USA)",
+   "languages_by_country": {
+    "default": "en"
+   },
+   "queries_en": [
+    "{state} community college purchasing",
+    "{state} technical college procurement contact",
+    "site:.edu community college purchasing director"
+   ]
+  },
+  "government-agency": {
+   "label": "Government agencies (federal/state/local)",
+   "queries_en": [
+    "{country} ministry of health procurement laboratory equipment",
+    "{country} science and technology ministry purchasing",
+    "{country} state laboratory procurement",
+    "site:.gov laboratory equipment contracting officer {region}"
+   ],
+   "queries_es": [
+    "{country} ministerio de salud licitación equipos laboratorio",
+    "{country} ministerio ciencia y tecnología compras"
+   ]
+  },
+  "hospital": {
+   "label": "Hospitals (public + private)",
+   "queries_en": [
+    "{country} hospital purchasing department laboratory equipment",
+    "{country} hospital procurement contact",
+    "{region} public hospital lab director"
+   ],
+   "queries_es": [
+    "hospital {country} departamento de compras laboratorio",
+    "hospital público {country} adquisiciones contacto"
+   ]
+  },
+  "clinical-laboratory": {
+   "label": "Clinical labs (diagnostic, pathology)",
+   "queries_en": [
+    "{country} clinical laboratory purchasing contact",
+    "{country} pathology lab procurement",
+    "{country} diagnostic laboratory equipment buyer",
+    "clinical laboratory {country} contact",
+    "diagnostic laboratory {country} directory",
+    "pathology laboratory {country}",
+    "medical analysis laboratory {country} contact",
+    "private clinical lab {country} purchasing"
+   ],
+   "queries_es": [
+    "laboratorio clínico {country} compras contacto",
+    "laboratorio diagnóstico {country} adquisiciones",
+    "laboratorio clínico {country} contacto",
+    "laboratorio de análisis clínicos {country}",
+    "laboratorio de patología {country}",
+    "directorio laboratorios clínicos {country}",
+    "laboratorio diagnóstico {country} compras",
+    "red de laboratorios clínicos {country}",
+    "laboratorio de microbiología clínica {country}",
+    "laboratorio bioquímico {country} contacto"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_pt": [
+    "laboratório de análises clínicas {country} contato",
+    "laboratório de patologia {country}",
+    "laboratório clínico {country} compras"
+   ]
+  },
+  "research-laboratory": {
+   "label": "Research labs (university-affiliated + independent)",
+   "queries_en": [
+    "{country} research laboratory purchasing director",
+    "{country} biomedical research lab equipment buyer",
+    "site:.edu research lab purchasing manager",
+    "research laboratory {country} contact purchasing",
+    "university research lab {country} equipment",
+    "independent research institute {country} laboratory"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_es": [
+    "laboratorio de investigación {country} contacto",
+    "instituto de investigación {country} laboratorio",
+    "centro de investigación científica {country}",
+    "laboratorio universitario investigación {country} compras"
+   ],
+   "queries_pt": [
+    "laboratório de pesquisa {country} contato",
+    "instituto de pesquisa {country} laboratório"
+   ]
+  },
+  "research-facility": {
+   "label": "Research facilities (corporate R&D, CRO)",
+   "queries_en": [
+    "contract research organization {country} procurement",
+    "{country} CRO laboratory equipment purchasing",
+    "corporate R&D laboratory {country} purchasing"
+   ]
+  },
+  "veterinary-diagnostic-lab": {
+   "label": "Veterinary + animal-health diagnostic labs",
+   "queries_en": [
+    "veterinary diagnostic laboratory {country} purchasing",
+    "animal health diagnostic lab {country} procurement",
+    "veterinary clinic chain {country} laboratory equipment buyer",
+    "{country} animal health ministry diagnostic lab",
+    "veterinary diagnostic laboratory {country} contact",
+    "animal health laboratory {country}",
+    "veterinary pathology lab {country}",
+    "poultry diagnostic laboratory {country}"
+   ],
+   "queries_es": [
+    "laboratorio diagnóstico veterinario {country} compras",
+    "sanidad animal {country} laboratorio adquisiciones",
+    "laboratorio de diagnóstico veterinario {country} contacto",
+    "laboratorio veterinario {country}",
+    "laboratorio sanidad animal {country}",
+    "laboratorio diagnóstico avícola {country}",
+    "laboratorio patología veterinaria {country}",
+    "directorio laboratorios veterinarios {country}"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_pt": [
+    "laboratório de diagnóstico veterinário {country} contato",
+    "laboratório de sanidade animal {country}"
+   ]
+  },
+  "forensic-crime-lab": {
+   "label": "Forensic + law-enforcement crime labs",
+   "queries_en": [
+    "{country} forensic laboratory procurement microscope",
+    "{country} crime lab equipment buyer",
+    "police forensic laboratory {country} purchasing",
+    "site:.gov forensic laboratory contract"
+   ],
+   "queries_es": [
+    "laboratorio forense {country} compras microscopios",
+    "policía científica {country} laboratorio adquisiciones",
+    "instituto medicina legal {country} compras"
+   ]
+  },
+  "food-beverage-qc-lab": {
+   "label": "Food + beverage manufacturers' QC labs",
+   "queries_en": [
+    "{country} food manufacturer quality control laboratory purchasing",
+    "beverage company {country} QC lab procurement",
+    "dairy processor {country} laboratory equipment buyer",
+    "{country} food safety laboratory equipment supplier",
+    "food testing laboratory {country} contact",
+    "food quality control lab {country}",
+    "beverage laboratory {country}",
+    "food safety microbiology lab {country}",
+    "bromatology laboratory {country}"
+   ],
+   "queries_es": [
+    "fábrica alimentos {country} laboratorio control calidad compras",
+    "bebidas {country} laboratorio calidad contacto",
+    "laboratorio control de calidad alimentos {country} contacto",
+    "laboratorio bromatológico {country}",
+    "laboratorio análisis de alimentos {country}",
+    "laboratorio microbiología de alimentos {country}",
+    "laboratorio inocuidad alimentaria {country}",
+    "laboratorio de bebidas {country}",
+    "directorio laboratorios de alimentos {country}"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_pt": [
+    "laboratório de análise de alimentos {country} contato",
+    "laboratório controle de qualidade alimentos {country}",
+    "laboratório bromatologia {country}"
+   ]
+  },
+  "pharma-qc-lab": {
+   "label": "Pharmaceutical QC + small-molecule pharma manufacturers",
+   "queries_en": [
+    "{country} pharmaceutical manufacturer QC laboratory purchasing",
+    "{country} generic drug manufacturer quality control lab",
+    "pharma plant {country} laboratory equipment buyer ISO 13485",
+    "pharmaceutical quality control laboratory {country} contact",
+    "pharma manufacturer QC lab {country}",
+    "pharmaceutical analysis laboratory {country}"
+   ],
+   "queries_es": [
+    "industria farmacéutica {country} control calidad laboratorio compras",
+    "fabricante medicamentos {country} laboratorio adquisiciones",
+    "laboratorio control de calidad farmacéutico {country} contacto",
+    "laboratorio farmacéutico {country} compras",
+    "laboratorio análisis farmacéutico {country}",
+    "industria farmacéutica {country} control de calidad",
+    "laboratorio fisicoquímico farmacéutico {country}"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_pt": [
+    "laboratório controle de qualidade farmacêutico {country} contato",
+    "indústria farmacêutica {country} controle de qualidade"
+   ]
+  },
+  "cosmetic-qc-lab": {
+   "label": "Cosmetic + personal-care manufacturers' QC labs",
+   "queries_en": [
+    "{country} cosmetic manufacturer QC laboratory purchasing",
+    "personal care company {country} quality control lab buyer",
+    "cosmetic manufacturer QC laboratory {country} contact",
+    "personal care products testing lab {country}",
+    "cosmetics quality control lab {country}"
+   ],
+   "queries_es": [
+    "fabricante cosméticos {country} control calidad laboratorio compras",
+    "laboratorio control de calidad cosméticos {country} contacto",
+    "fabricante cosméticos {country} laboratorio",
+    "laboratorio análisis cosméticos {country}",
+    "industria cosmética {country} control de calidad"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_pt": [
+    "laboratório controle de qualidade cosméticos {country} contato",
+    "indústria cosmética {country} laboratório"
+   ]
+  },
+  "cannabis-testing-lab": {
+   "label": "Cannabis testing labs (US legal-state markets)",
+   "queries_en": [
+    "cannabis testing laboratory {state} purchasing",
+    "{state} marijuana testing lab equipment procurement",
+    "hemp testing facility {state} laboratory equipment buyer",
+    "{state} ISO 17025 cannabis lab purchasing"
+   ]
+  },
+  "water-environmental-testing-lab": {
+   "label": "Water + environmental testing labs",
+   "queries_en": [
+    "{country} water testing laboratory purchasing",
+    "environmental laboratory {country} procurement",
+    "{region} water utility laboratory equipment buyer",
+    "{country} environmental ministry laboratory procurement",
+    "water testing laboratory {country} contact",
+    "environmental laboratory {country}",
+    "wastewater analysis lab {country}",
+    "soil testing laboratory {country}"
+   ],
+   "queries_es": [
+    "laboratorio aguas {country} compras",
+    "laboratorio ambiental {country} adquisiciones",
+    "laboratorio análisis de agua {country} contacto",
+    "laboratorio ambiental {country}",
+    "laboratorio de aguas residuales {country}",
+    "laboratorio análisis de suelos {country}",
+    "laboratorio microbiología ambiental {country}",
+    "directorio laboratorios ambientales {country}"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_pt": [
+    "laboratório de análise de água {country} contato",
+    "laboratório ambiental {country}"
+   ]
+  },
+  "vocational-training-center": {
+   "label": "Vocational + technical training centers",
+   "queries_en": [
+    "{country} vocational training center laboratory equipment purchasing",
+    "technical institute {country} lab procurement",
+    "trade school {state} laboratory equipment buyer"
+   ],
+   "queries_es": [
+    "instituto técnico {country} laboratorio compras",
+    "SENA Colombia laboratorio adquisiciones",
+    "SENATI Perú laboratorio compras",
+    "INFOCAL {country} laboratorio"
+   ]
+  },
+  "medical-training-school": {
+   "label": "Medical / nursing / allied-health training schools",
+   "queries_en": [
+    "{country} nursing school laboratory equipment purchasing",
+    "medical training institute {country} microscope procurement",
+    "allied health school {country} lab equipment buyer"
+   ],
+   "queries_es": [
+    "escuela enfermería {country} laboratorio compras microscopios",
+    "instituto medicina {country} laboratorio adquisiciones"
+   ]
+  },
+  "materials-science-lab": {
+   "label": "Materials science + metallurgy labs (industrial)",
+   "queries_en": [
+    "{country} metallurgy laboratory purchasing metallographic microscope",
+    "materials testing laboratory {country} procurement",
+    "industrial QC laboratory {country} {region} equipment buyer",
+    "materials testing laboratory {country} contact",
+    "metallurgical laboratory {country}",
+    "materials science lab {country}"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_es": [
+    "laboratorio de ensayo de materiales {country} contacto",
+    "laboratorio metalúrgico {country}",
+    "laboratorio de ciencia de materiales {country}",
+    "laboratorio de control de calidad industrial {country}"
+   ],
+   "queries_pt": [
+    "laboratório de ensaio de materiais {country} contato",
+    "laboratório metalúrgico {country}"
+   ]
+  },
+  "cell-culture-biotech-lab": {
+   "label": "Cell-culture biotech + small biopharma",
+   "queries_en": [
+    "{country} biotech cell culture laboratory purchasing inverted microscope",
+    "small biopharma {country} laboratory equipment buyer",
+    "{country} stem cell research laboratory procurement",
+    "biotech laboratory {country} contact",
+    "cell culture laboratory {country}",
+    "biotechnology company {country} lab"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_es": [
+    "laboratorio de biotecnología {country} contacto",
+    "laboratorio cultivo celular {country}",
+    "empresa biotecnológica {country} laboratorio",
+    "laboratorio biología molecular {country}"
+   ],
+   "queries_pt": [
+    "laboratório de biotecnologia {country} contato",
+    "laboratório cultura celular {country}"
+   ]
+  },
+  "mining-assay-lab": {
+   "label": "Mining + exploration assay labs",
+   "queries_en": [
+    "{country} mining assay laboratory purchasing balance spectrophotometer",
+    "{region} mining exploration laboratory procurement",
+    "{country} geological survey laboratory equipment buyer",
+    "mining assay laboratory {country} contact",
+    "mineral analysis laboratory {country}",
+    "geochemistry assay lab {country}",
+    "ore testing laboratory {country}"
+   ],
+   "queries_es": [
+    "laboratorio minero {country} compras balanza espectrofotómetro",
+    "{country} exploración minera laboratorio adquisiciones",
+    "laboratorio de ensayo minero {country} contacto",
+    "laboratorio de análisis de minerales {country}",
+    "laboratorio geoquímico {country}",
+    "laboratorio metalúrgico {country}",
+    "laboratorio análisis de menas {country}",
+    "directorio laboratorios mineros {country}"
+   ],
+   "languages_by_country": {
+    "default": "en",
+    "Peru": "es",
+    "Argentina": "es",
+    "Colombia": "es",
+    "Chile": "es",
+    "Ecuador": "es",
+    "Bolivia": "es",
+    "Paraguay": "es",
+    "Uruguay": "es",
+    "Venezuela": "es",
+    "Costa Rica": "es",
+    "Panama": "es",
+    "Guatemala": "es",
+    "Dominican Republic": "es",
+    "Spain": "es",
+    "Brazil": "pt",
+    "Mexico": "BLOCKED"
+   },
+   "queries_pt": [
+    "laboratório de ensaios minerais {country} contato",
+    "laboratório geoquímico {country}"
+   ]
+  }
+ }
+}

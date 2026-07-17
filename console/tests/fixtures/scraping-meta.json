@@ -1,0 +1,22 @@
+{
+  "categories": [
+    { "key": "lab-equipment-distributor", "label": "Lab equipment distributors (non-US)" },
+    { "key": "medical-device-distributor", "label": "Medical device distributors" }
+  ],
+  "countries": ["Ecuador", "Brazil", "Chile", "Argentina"],
+  "pool": { "verified": 742, "uncontacted": 397 },
+  "veins": [
+    { "category": "lab-equipment-distributor", "country": "Argentina", "landed": 28, "lastMined": "2026-06-22", "runs": 3 }
+  ],
+  "history": [
+    { "file": "2026-06-24__lab-distributor__ecuador.json", "batch": "2026-06-24__lab-distributor__ecuador", "category": "lab-distributor", "geo": "ecuador", "date": "2026-06-24", "landed": 5, "emailed": 4 },
+    { "file": "2026-06-24__lab-distributor__brazil.json", "batch": "2026-06-24__lab-distributor__brazil", "category": "lab-distributor", "geo": "brazil", "date": "2026-06-24", "landed": 9, "emailed": 9 },
+    { "file": "2026-05-30__hubspot-legacy__americas.json", "batch": "2026-05-30__hubspot-legacy__americas", "category": "hubspot-legacy", "geo": "Americas", "date": "2026-05-30", "landed": 12, "emailed": 12 },
+    { "file": "2026-05-28__none__none.json", "batch": "2026-05-28__none__none", "category": "—", "geo": "—", "date": "2026-05-28", "landed": 3, "emailed": 3 }
+  ],
+  "sources": [
+    { "status": "PRODUCTIVE", "total_kept": 100, "last_kept": 100, "last_run": "2026-06-24", "country": "Brazil", "name": "Andes Lab Directory (lab diagnosti", "url": "https://andes-directory.example.com/associados/" },
+    { "status": "FRESH", "total_kept": 0, "last_kept": 0, "last_run": "-", "country": "Peru", "name": "Expo Minera 37 exhibitor", "url": "https://expo-mineria.example.com/37" },
+    { "status": "TAPPED-OUT", "total_kept": 0, "last_kept": 0, "last_run": "2026-06-22", "country": "Colombia", "name": "Medinfo Directory dic_a", "url": "https://medinfo.example.com/dic_a" }
+  ]
+}

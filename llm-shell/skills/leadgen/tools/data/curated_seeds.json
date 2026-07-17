@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "description": "GENERALIZED PLACEHOLDER (sanitized showcase). The real file is a curated list of high-precision discovery seeds for the target ICP. The technique: unlike generic web search (~30-40% precision), a good seed is a page that both lists real third-party companies AND links OUT to each company's own domain in static HTML. curated_discovery.py harvests those outbound domains, then the normal scrape + verify + ICP-filter pipeline takes over. The concrete validated source URLs, per-source yields, and operator sourcing strategy have been removed from this public copy; only the file SHAPE and a few illustrative example entries remain so the code still parses and runs.",
+    "version": 3,
+    "last_updated": "SANITIZED",
+    "seed_selection_notes": {
+      "concept": "Enrichment means carving NEW, precise discovery tunnels so successive passes stop bumping into the same companies. The productive seams are association member rosters, directory index pages, and trade-show exhibitor lists that expose per-company website links in STATIC HTML.",
+      "keep_rule": "Only keep a seed if it exposes >= 8 distinct OUTBOUND company domains in static HTML.",
+      "reject_rule": "Reject JS-rendered app-shell directories and internal-profile-only pages that never link out to a company's own domain.",
+      "geo_gate": "Country-aware: reads cctld_by_country from scoring config; the curated path is not region-locked."
+    }
+  },
+  "manufacturer_locators": [
+    {
+      "brand": "Example Instruments",
+      "url": "https://www.example.com/where-to-buy",
+      "note": "static gateway -> per-country distributor domains",
+      "render": "static"
+    },
+    {
+      "brand": "Example Scientific",
+      "url": "https://www.example.org/distributors",
+      "note": "global distributor list",
+      "render": "js"
+    }
+  ],
+  "directories": [
+    {
+      "name": "Example Regional Business Directory",
+      "url": "https://directory.example.com/laboratory-equipment",
+      "country": "Example Country",
+      "render": "static"
+    },
+    {
+      "name": "Example Yellow Pages",
+      "url": "https://pages.example.org/category/medical-equipment",
+      "country": "Example Country",
+      "render": "static"
+    }
+  ],
+  "associations": [
+    {
+      "name": "Example Lab-Distributors Association",
+      "url": "https://assoc.example.org/members",
+      "country": "Example Country",
+      "render": "static"
+    }
+  ],
+  "trade_shows": [
+    {
+      "name": "Example Lab & Diagnostics Expo",
+      "url": "https://expo.example.com/exhibitors",
+      "country": "Example Country",
+      "render": "static",
+      "note": "exhibitor directory with per-company outbound links",
+      "validated_yield": 0,
+      "added": "SANITIZED"
+    }
+  ]
+}

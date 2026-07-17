@@ -1,0 +1,9 @@
+{
+  "batch": "2026-06-24__lab-distributor__ecuador.json",
+  "as_of": "2026-07-12",
+  "openable": 1,
+  "groups": [
+    { "lang": "spanish", "count": 1, "companies": [{ "institution": "Vitalab", "email": "info@vitalab.example.com", "country": "Ecuador" }] }
+  ],
+  "skipped": { "no_email": 0, "already_contacted": 4, "dnc": 0, "banned_geo": 0, "duplicate_company": 0 }
+}

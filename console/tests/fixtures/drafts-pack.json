@@ -1,0 +1,22 @@
+{
+  "file": "2026-06-27__cold-followups__spanish__cold-02.json",
+  "mtime": 0,
+  "pack": {
+    "date": "2026-06-27",
+    "batch_label": "cadence-followups-2026-06-27-cold-ES-COLD-02",
+    "status": "draft",
+    "drafts": [
+      {
+        "draft_type": "COLD-02-FOLLOWUP",
+        "institution": "Nova Diagnostics",
+        "to_email": "info@nova-diagnostics.example.com",
+        "to_name": "equipo de Nova Diagnostics",
+        "subject": "Re: Propuesta de distribución — VELAB con Nova Diagnostics",
+        "body": "Estimado equipo de Nova Diagnostics,\n\nQuería dar seguimiento a nuestro mensaje anterior. En VELAB seguimos muy interesados en una relación comercial con Nova Diagnostics.\n\nCuando les resulte oportuno, con gusto coordinamos una llamada breve. Quedamos atentos.\n\nRobert Montalvo\nVELAB Co.",
+        "in_reply_to": null,
+        "references": null,
+        "lead_number": 1
+      }
+    ]
+  }
+}

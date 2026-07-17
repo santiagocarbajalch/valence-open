@@ -1,0 +1,56 @@
+{
+  "_doc": "ICP-relevance lexicon for icp_classify.py. Terms are matched case-insensitively as whole-word regex fragments against a company's own site text (EN/ES/PT). EDIT THIS FILE to tune the gate as new markets surface new noise — no code change needed. Weights are per distinct category-hit; thresholds in `params`.",
+  "params": {
+    "lab_min": 2,
+    "neg_threshold": 2,
+    "mfr_threshold": 2,
+    "thin_text_chars": 600
+  },
+  "distributor": [
+    "distribuidor(?:a|es)?", "distribuid[oa]", "distributor", "distribution",
+    "representante(?:s)?\\s+(?:autorizad[oa]s?|exclusiv[oa]s?|oficial(?:es)?)",
+    "distribuidor(?:es)?\\s+(?:autorizad[oa]s?|exclusiv[oa]s?|oficial(?:es)?)",
+    "authorized\\s+(?:dealer|distributor|reseller)", "sole\\s+distributor",
+    "importador(?:a|es)?", "import(?:ación|acao|aciones)", "comercializa(?:mos|ci[oó]n|dora)?",
+    "marcas\\s+que\\s+representamos", "representamos\\s+(?:las\\s+)?marcas",
+    "l[ií]neas\\s+de\\s+productos", "nuestras\\s+marcas", "revendedor(?:a|es)?",
+    "distribui(?:dor|ção|mos)", "representa(?:ção|nte)", "fornecedor(?:a|es)?",
+    "proveedor(?:a|es)?\\s+de\\s+equipos", "supplier\\s+of", "dealer(?:ship)?"
+  ],
+  "lab": [
+    "laboratorio(?:s)?", "laborator(?:y|ies|io|ios|i[oa]l)", "laborat[óo]rio(?:s)?",
+    "equipos?\\s+(?:de|para)\\s+laboratorio", "lab(?:oratory)?\\s+equipment",
+    "equipamentos?\\s+(?:de|para)\\s+laborat[óo]rio", "material\\s+de\\s+laboratorio",
+    "instrumental(?:es)?", "instrumenta(?:ci[oó]n|tion|ç[ãa]o)", "instrument(?:s|ation)?",
+    "reactivo(?:s)?", "reagent(?:s)?", "reagente(?:s)?", "insumos\\s+(?:de|para)\\s+laboratorio",
+    "diagn[óo]stic[oa]?(?:s|os|o)?", "diagnostic(?:s)?", "in\\s*vitro", "\\bivd\\b",
+    "cient[íi]fic[oa]s?", "scientific", "cient[íi]fic[oa]",
+    "microscop(?:io|ios|e|es|y|ía)", "balanza(?:s)?\\s+(?:anal[íi]tica|de\\s+precisi[oó]n)",
+    "anal[yi]tical\\s+balance", "centr[íi]fug(?:a|as|e|es|ación)", "espectrofot[óo]metro(?:s)?",
+    "spectrophotometer(?:s)?", "espectro(?:metr[íi]a)?", "pipet(?:a|as|te|tes|eo)",
+    "autoclave(?:s)?", "incubador(?:a|as)|incubator(?:s)?", "analizador(?:a|es)?",
+    "analyzer(?:s)?", "anal[íi]tica", "qu[íi]mica\\s+(?:anal[íi]tica|cl[íi]nica)",
+    "biolog[íií]a|biology", "cl[íi]nic[oa]s?|clinical", "patolog[íi]a|pathology",
+    "hematolog[íi]a|hematology", "microbiolog[íi]a|microbiology", "biom[ée]dic[oa]",
+    "biotecnolog[íi]a|biotech", "material\\s+m[ée]dico|medical\\s+devices?",
+    "dispositivos?\\s+m[ée]dicos?", "equipamento\\s+m[ée]dico"
+  ],
+  "manufacturer": [
+    "fabricante(?:s)?", "fabricamos", "fabrica(?:ci[óo]n|ç[ãa]o)\\s+propia",
+    "we\\s+manufacture", "manufactur(?:er|ing|e)", "nuestra\\s+f[áa]brica",
+    "f[áa]brica\\s+de", "planta\\s+(?:de\\s+)?producci[óo]n", "production\\s+facility",
+    "our\\s+factory", "\\boem\\b", "patentad[oa]|patented", "marca\\s+propia|own\\s+brand"
+  ],
+  "negative": {
+    "law": ["abogad[oa]s?", "attorney(?:s)?", "law\\s+firm", "bufete", "jur[íi]dic[oa]s?", "servicios?\\s+legales", "estudio\\s+jur[íi]dico", "advogad[oa]s?"],
+    "ehs_occhealth": ["seguridad\\s+ocupacional", "salud\\s+ocupacional", "occupational\\s+(?:safety|health)", "\\behs\\b", "higiene\\s+(?:y\\s+seguridad|industrial)", "seguridad\\s+industrial", "medicina\\s+ocupacional", "jornadas?\\s+m[ée]dicas?", "ex[áa]menes?\\s+pre.?ocupacionales?"],
+    "logistics": ["log[íi]stic[ao]s?", "logistic(?:s)?", "\\bcarga(?:s)?\\b", "\\bcargo\\b", "freight", "aduana(?:s|l)?", "customs\\s+broker", "agencia(?:miento)?\\s+aduanal", "transporte(?:s)?\\s+(?:de\\s+carga|internacional)", "courier", "almacenaje|warehousing", "naviera|forwarder", "comercio\\s+internacional"],
+    "retail_hardware": ["ferreter[íi]a", "homecenter", "tornillos?\\b", "hardware\\s+store", "tienda\\s+(?:online|de)", "almacenes?\\s+la\\b", "retail\\b", "art[íi]culos?\\s+de\\s+ferreter[íi]a"],
+    "industrial_offlab": ["neum[áa]tic[ao]s?", "pneumatic(?:s)?", "rodamiento(?:s)?", "bearing(?:s)?", "automatizaci[óo]n\\s+industrial", "industrial\\s+automation", "\\bcnc\\b", "rodillo(?:s)?\\b", "maquinaria\\s+(?:pesada|industrial)", "machining|tornos?\\b", "rueda(?:s)?\\s+y\\s+roda"],
+    "marketing_it_data": ["agencia\\s+de\\s+marketing", "marketing\\s+agency", "branding", "desarrollo\\s+web", "data\\s+(?:science|analytics)", "inteligencia\\s+de\\s+mercado", "market\\s+intelligence", "business\\s+intelligence", "software\\s+(?:factory|development)", "servicios?\\s+de\\s+ti\\b"],
+    "standards_chamber": ["c[óo]digo(?:s)?\\s+de\\s+barras", "barcode", "\\bgs1\\b", "organismo\\s+de\\s+normalizaci[óo]n", "standards\\s+body", "c[áa]mara\\s+(?:de\\s+industria|de\\s+comercio)", "gremio\\b"],
+    "construction_realestate": ["construcci[óo]n\\b", "constructora", "inmobiliaria", "real\\s+estate", "bienes\\s+ra[íi]ces"],
+    "pest_environmental": ["control\\s+de\\s+plagas", "pest\\s+control", "fumigaci[óo]n", "repelente(?:s)?", "consultor[íi]a\\s+ambiental", "gesti[óo]n\\s+ambiental", "estudios?\\s+de\\s+impacto\\s+ambiental"],
+    "consulting_generic": ["regulatory\\s+affairs", "market\\s+access", "asuntos?\\s+regulatorios", "consultor[íi]a\\s+(?:estrat[ée]gica|empresarial|de\\s+gesti[óo]n)"]
+  }
+}

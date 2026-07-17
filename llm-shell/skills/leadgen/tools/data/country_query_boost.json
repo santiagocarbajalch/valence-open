@@ -1,0 +1,115 @@
+{
+  "_meta": {
+    "description": "Per-country query boosts; merged over in-code baseline by source_discovery.py overlay loader. Format {Country: [[query, lang], ...]}. Highest-yield pattern = ccTLD-anchored site: queries + major-city names (proven ~0.78 precision vs ~0.05 generic).",
+    "managed_by": "operator (jardinero gardener retired 2026-06-21)",
+    "last_updated": "2026-06-21"
+  },
+  "Bolivia": [
+    ["distribuidor equipos de laboratorio La Paz Bolivia", "es"],
+    ["importador material de laboratorio Santa Cruz Bolivia contacto", "es"],
+    ["proveedor instrumentos cientificos Bolivia", "es"]
+  ],
+  "Panama": [
+    ["distribuidor equipos de laboratorio Panamá site:.pa", "es"],
+    ["proveedor equipos de laboratorio Ciudad de Panamá site:.pa", "es"],
+    ["representante equipos científicos Panamá site:.pa", "es"],
+    ["proveedor centrífugas de laboratorio David Panamá", "es"],
+    ["distribuidor espectrofotómetros Panamá Colón", "es"]
+  ],
+  "Dominican Republic": [
+    ["distribuidor equipos de laboratorio República Dominicana site:.do", "es"],
+    ["proveedor equipos de laboratorio Santo Domingo site:.do", "es"],
+    ["representante material de laboratorio Santiago de los Caballeros República Dominicana", "es"],
+    ["importador equipos científicos República Dominicana contacto", "es"],
+    ["distribuidor balanzas analíticas República Dominicana site:.do", "es"],
+    ["proveedor centrífugas de laboratorio Santo Domingo República Dominicana", "es"],
+    ["distribuidor espectrofotómetros República Dominicana site:.do", "es"],
+    ["proveedor autoclaves laboratorio San Pedro de Macorís República Dominicana", "es"]
+  ],
+  "Brazil": [
+    ["distribuidor equipamentos laboratoriais São Paulo site:.br", "pt"],
+    ["fornecedor equipamentos científicos Rio de Janeiro site:.br", "pt"],
+    ["importador material laboratório Brasil contato site:.br", "pt"],
+    ["distribuidor equipamentos laboratório Belo Horizonte site:.br", "pt"],
+    ["representante balanças analíticas Brasil site:.br", "pt"],
+    ["fornecedor reagentes laboratório Curitiba Porto Alegre", "pt"],
+    ["distribuidor microscópios centrífugas Brasil site:.br", "pt"],
+    ["fornecedor vidraria laboratório Campinas São Paulo", "pt"]
+  ],
+  "Guatemala": [
+    ["distribuidor equipos de laboratorio Guatemala site:.gt", "es"],
+    ["proveedor equipos de laboratorio Ciudad de Guatemala site:.gt", "es"],
+    ["importador material de laboratorio Guatemala contacto", "es"]
+  ],
+  "Honduras": [
+    ["distribuidor equipos de laboratorio Honduras site:.hn", "es"],
+    ["proveedor equipos de laboratorio Tegucigalpa San Pedro Sula", "es"]
+  ],
+  "Paraguay": [
+    ["distribuidor equipos de laboratorio Paraguay site:.py", "es"],
+    ["proveedor equipos de laboratorio Asunción site:.py", "es"]
+  ],
+  "Venezuela": [
+    ["distribuidor equipos de laboratorio Venezuela site:.ve", "es"],
+    ["proveedor equipos de laboratorio Caracas Valencia Maracaibo", "es"]
+  ],
+  "Uruguay": [
+    ["distribuidor equipos de laboratorio Uruguay site:.uy", "es"],
+    ["proveedor equipos de laboratorio Montevideo site:.uy", "es"]
+  ],
+  "Philippines": [
+    ["laboratory equipment supplier Philippines site:.ph", "en"],
+    ["scientific instruments distributor Manila Makati site:.ph", "en"],
+    ["lab equipment supplier Cebu Quezon City Philippines contact", "en"],
+    ["analytical balance microscope distributor Philippines site:.ph", "en"],
+    ["laboratory reagents consumables supplier Philippines site:.ph", "en"]
+  ],
+  "Indonesia": [
+    ["laboratory equipment supplier Indonesia site:.id", "en"],
+    ["distributor alat laboratorium Jakarta Surabaya site:.id", "en"],
+    ["scientific instruments importer Indonesia contact", "en"],
+    ["analytical balance centrifuge supplier Indonesia site:.id", "en"]
+  ],
+  "Malaysia": [
+    ["laboratory equipment supplier Malaysia site:.my", "en"],
+    ["scientific instruments distributor Kuala Lumpur Selangor site:.my", "en"],
+    ["lab equipment supplier Penang Johor Malaysia contact", "en"],
+    ["analytical balance microscope distributor Malaysia site:.my", "en"]
+  ],
+  "Vietnam": [
+    ["laboratory equipment supplier Vietnam site:.vn", "en"],
+    ["scientific instruments distributor Hanoi Ho Chi Minh site:.vn", "en"],
+    ["lab equipment importer Vietnam contact", "en"],
+    ["analytical balance centrifuge supplier Vietnam site:.vn", "en"]
+  ],
+  "Thailand": [
+    ["laboratory equipment supplier Thailand site:.th", "en"],
+    ["scientific instruments distributor Bangkok site:.th", "en"],
+    ["lab equipment importer Thailand contact", "en"],
+    ["analytical balance microscope distributor Thailand site:.th", "en"]
+  ],
+  "South Africa": [
+    ["laboratory equipment supplier South Africa site:.za", "en"],
+    ["scientific instruments distributor Johannesburg Cape Town site:.za", "en"],
+    ["lab equipment supplier Durban Pretoria South Africa contact", "en"],
+    ["analytical balance microscope distributor South Africa site:.za", "en"],
+    ["laboratory reagents consumables supplier South Africa site:.za", "en"]
+  ],
+  "Kenya": [
+    ["laboratory equipment supplier Kenya site:.ke", "en"],
+    ["scientific instruments distributor Nairobi Mombasa site:.ke", "en"],
+    ["lab equipment importer Kenya contact", "en"],
+    ["analytical balance centrifuge supplier Kenya site:.ke", "en"]
+  ],
+  "Nigeria": [
+    ["laboratory equipment supplier Nigeria site:.ng", "en"],
+    ["scientific instruments distributor Lagos Abuja site:.ng", "en"],
+    ["lab equipment importer Nigeria contact", "en"],
+    ["analytical balance microscope distributor Nigeria site:.ng", "en"]
+  ],
+  "Ghana": [
+    ["laboratory equipment supplier Ghana site:.gh", "en"],
+    ["scientific instruments distributor Accra Kumasi site:.gh", "en"],
+    ["lab equipment importer Ghana contact", "en"]
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "tasks": [
+    {
+      "id": "stage-fixture01-run",
+      "kind": "stage",
+      "title": "Safety checks on 28 drafts — cold follow-ups · Spanish · 2nd follow-up",
+      "startedAt": 1783952202139,
+      "endedAt": null,
+      "running": true,
+      "ok": null,
+      "progress": "threading check",
+      "done": 3,
+      "total": 6,
+      "packFile": "2026-07-13__cold-followups__spanish__cold-02.json",
+      "view": "cockpit"
+    },
+    {
+      "id": "send-fixture03-done",
+      "kind": "send",
+      "title": "Sending 23 emails — cold follow-ups · Spanish · 2nd follow-up",
+      "startedAt": 1783950002139,
+      "endedAt": 1783951802139,
+      "running": false,
+      "ok": true,
+      "progress": "23 of 23 delivered",
+      "done": 23,
+      "total": 23,
+      "packFile": "2026-07-13__cold-followups__spanish__cold-02.json",
+      "view": "cockpit"
+    },
+    {
+      "id": "stage-fixture02-bad",
+      "kind": "stage",
+      "title": "Safety checks on 28 drafts — 2026-07-13__cold-followups__spanish__cold-02.json",
+      "startedAt": 1783952102139,
+      "endedAt": 1783952112139,
+      "running": false,
+      "ok": false,
+      "failure": "Cadence gate — 28 entries (28 cold-gated) · as-of 2026-07-13\n\nBLOCKED — 1 entry mis-paced:\n\n- Orion (sales@orion-me.example.com) [COLD-02-FOLLOWUP]\n    · GEO: domain 'orion-me.example.com' carries a non-ICP geography marker\n\nFix: rebuild the worklist from inbox_view (the cadence authority).",
+      "packFile": "2026-07-13__cold-followups__spanish__cold-02.json",
+      "view": "cockpit"
+    },
+    {
+      "id": "staged-2026-07-11__cold-followups__spanish__cold-02",
+      "kind": "staged-waiting",
+      "title": "27 drafts staged — waiting for your send confirm",
+      "startedAt": 1783951202139,
+      "endedAt": null,
+      "running": false,
+      "ok": null,
+      "packFile": "2026-07-11__cold-followups__spanish__cold-02.json",
+      "view": "cockpit"
+    }
+  ]
+}

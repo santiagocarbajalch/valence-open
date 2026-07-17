@@ -1,0 +1,24 @@
+{
+  "as_of": "2026-06-27",
+  "cold_due": 2,
+  "groups": [
+    {
+      "lang": "spanish",
+      "step": "cold-02",
+      "label": "Spanish · 2nd touch of 3",
+      "count": 1,
+      "companies": [
+        {
+          "domain": "nova-diagnostics.example.com",
+          "to_email": "info@nova-diagnostics.example.com",
+          "institution": "Nova Diagnostics"
+        }
+      ]
+    }
+  ],
+  "dropped_noise": [],
+  "unresolved_no_send_on_record": [
+    "prospecto7291@example.com"
+  ],
+  "skipped_dnc": []
+}

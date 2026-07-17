@@ -1,0 +1,7 @@
+{
+  "leads": [
+    { "institution": "Vitalab", "email": "info@vitalab.example.com", "contactName": "", "title": "", "phone": "", "country": "Ecuador", "emailed": false },
+    { "institution": "Riolab", "email": "ventas@riolab.example.com", "contactName": "", "title": "", "phone": "", "country": "Ecuador", "emailed": true },
+    { "institution": "Tradecus", "email": "info@comercia.example.com", "contactName": "", "title": "", "phone": "", "country": "Ecuador", "emailed": true }
+  ]
+}

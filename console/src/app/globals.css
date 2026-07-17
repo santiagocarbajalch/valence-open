@@ -1,0 +1,625 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   VALENCE CONSOLE — design tokens, v4 "FRONT OFFICE"
+   Thesis: a professional sales operations application. White elevated cards
+   on a cool canvas, a navy chrome sidebar organized by workflow phase, one
+   action blue, semantic green/amber/red reserved for state. No glass, no
+   blur, no atmosphere — surfaces are solid and controls look like controls.
+   Day is the default; night (html.night) is the same system in dark ink.
+
+   RULES
+   - Every color a component uses comes from a token below. No literal hexes
+     in TSX. Agent identity colors are DATA (lib/agents.ts) — passing them
+     into style props is fine; inventing new hexes in components is not.
+   - Type is a 6-step scale (text-micro … text-hero). No ad-hoc text-[Npx].
+   - Status meaning = tone tokens. `--tone-*` for fills/dots/borders,
+     `--tone-*-ink` for text (AA-safe variants).
+   ========================================================================= */
+
+:root {
+  /* ---- fonts (self-hosted, /public/fonts) — CALIBRATED INSTRUMENT -------
+     IBM Plex Sans (400/500/600) + IBM Plex Mono (400/500). Faces ship as
+     latin woff2 in /public/fonts (@font-face below); no runtime Google Fonts.
+     Exposed here as CSS vars so the whole token layer + Tailwind derive from
+     one place (--font-sans / --font-mono in @theme inline). */
+  --app-font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --app-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---- surfaces (TRADE — navy brand, day) -------------------------------- */
+  --bg-0: #f3f5f9;          /* app canvas, furthest back  (trade --bg)   */
+  --bg-1: #e9edf4;          /* wells inside cards         (trade --well) */
+  --bg-2: #ffffff;          /* card / panel               (trade --surface) */
+  --bg-3: #ffffff;          /* raised solid (modals, tooltips)           */
+
+  /* ---- ink (text, navy-cast charcoal — TRADE) ---------------------------- */
+  --ink: #16233b;
+  --ink-dim: #4a5a74;
+  /* ink-faint bumped to the TRADE --ink-dim tier (2026-07-16 audit): the old
+     faint value failed 4.5:1 on tinted row-state backgrounds. Faint now equals
+     dim in day so small secondary print stays AA on every row state. */
+  --ink-faint: #4a5a74;
+
+  /* ---- hairlines & neutral fills (TRADE) --------------------------------- */
+  --line: #d6dde8;
+  --line-strong: #94a0b3;
+  --fill-1: rgba(22, 35, 59, 0.035);
+  --fill-2: rgba(22, 35, 59, 0.06);
+  --fill-3: rgba(22, 35, 59, 0.10);
+  --well: #e9edf4;
+
+  /* ---- state hues (COLOR = STATE) — first-class tokens -------------------
+     owed / due / meet / ok / idle, the five carriers the assay strips + chips
+     ride. The tone-* system below is aliased onto them so every existing
+     tone-based component adopts the palette for free. */
+  --st-owed: #be3a12;   --st-due: #8a6d00;   --st-meet: #0e7490;
+  --st-ok: #1f7a3d;     --st-idle: #5c6b7e;
+  --chip-alpha: 0.11;
+
+  /* ---- tone / status (aliased onto the state hues) ------------------------ */
+  --tone-ok: var(--st-ok);        --tone-ok-ink: #1a6633;
+  --tone-warn: var(--st-due);     --tone-warn-ink: #6f5800;
+  --tone-bad: var(--st-owed);     --tone-bad-ink: #a2300e;
+  --tone-info: var(--st-meet);    --tone-info-ink: #0b6076;
+  --tone-neutral: var(--st-idle); --tone-neutral-ink: #48566a;
+  --tone-bad-contrast: #ffffff;
+
+  /* ---- agent identity (functional: ownership across Vault, map, System) -- */
+  --c-valence: #c79a1f;
+  --c-archivist: #4d8bd1;
+  --c-nightkeeper: #8b7be8;
+  --c-scraper: #d97e36;
+  --c-mailman: #d4587a;
+  --c-steward: #3e9c79;
+
+  /* ---- accent (TRADE cobalt→navy; ONE primary per pane) ------------------- */
+  --accent: #1b3a8c;
+  --accent-contrast: #ffffff;
+  --ink-on-vivid: #0b0f17;    /* static dark ink for vivid tone/agent fills */
+
+  /* ---- chrome (the navy sidebar shell — TRADE --side-bg #10203F) ---------- */
+  --chrome: #10203f;
+  --chrome-line: rgba(255, 255, 255, 0.08);
+  --chrome-ink: #e4e9f0;
+  --chrome-dim: #9daabb;
+  --chrome-hover: rgba(255, 255, 255, 0.05);
+  --chrome-active: rgba(255, 255, 255, 0.09);
+
+  /* ---- shell geometry (sidebar rail + mobile top bar) -------------------- */
+  --side-w: 216px;
+  --topbar-h: 46px;
+
+  /* ---- pane recipe (kept token names; now SOLID elevated cards) ----------- */
+  --glass-fill: #ffffff;
+  --glass-fill-strong: #ffffff;
+  --glass-edge: rgba(23, 32, 46, 0.13);
+  --glass-edge-strong: rgba(23, 32, 46, 0.22);
+  --glass-highlight: transparent;
+  --glass-shadow:
+    0 1px 2px rgba(23, 32, 46, 0.05),
+    0 1px 4px rgba(23, 32, 46, 0.08);
+  --glass-shadow-strong: 0 10px 30px rgba(23, 32, 46, 0.16);
+  --blur-scrim: 0px;
+
+  /* ---- radii --------------------------------------------------------------- */
+  --radius-ctl: 6px;
+  --radius-card: 10px;
+  --radius-pane: 12px;
+  --radius-modal: 14px;
+
+  /* ---- motion --------------------------------------------------------------- */
+  --ease-glide: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ================================ NIGHT ================================
+   The same application in dark ink. Solid dark cards, brighter action
+   blue, tones lifted for contrast. Toggled by html.night (persisted;
+   day is the default). */
+html.night {
+  /* TRADE — navy brand, night */
+  --bg-0: #101725;
+  --bg-1: #0b111c;
+  --bg-2: #182236;
+  --bg-3: #182236;
+
+  --ink: #eaf0f8;
+  --ink-dim: #a6b6ce;
+  /* faint == dim at night too (readable secondary tier on every row state) */
+  --ink-faint: #a6b6ce;
+
+  --line: #26324a;
+  --line-strong: #4c5c78;
+  --fill-1: rgba(166, 182, 206, 0.05);
+  --fill-2: rgba(166, 182, 206, 0.09);
+  --fill-3: rgba(166, 182, 206, 0.14);
+  --well: #0b111c;
+
+  --st-owed: #f0703f;   --st-due: #d4ac2b;   --st-meet: #3fb8ce;
+  --st-ok: #52b573;     --st-idle: #93a2b4;
+  --chip-alpha: 0.16;
+
+  --tone-ok: var(--st-ok);        --tone-ok-ink: #6fc98d;
+  --tone-warn: var(--st-due);     --tone-warn-ink: #e1be51;
+  --tone-bad: var(--st-owed);     --tone-bad-ink: #f58f66;
+  --tone-info: var(--st-meet);    --tone-info-ink: #63c7d8;
+  --tone-neutral: var(--st-idle); --tone-neutral-ink: #aebac8;
+  --tone-bad-contrast: #101725;
+
+  --accent: #6d8df2;
+  --accent-contrast: #0c1526;
+
+  --chrome: #0c1526;
+  --chrome-line: rgba(255, 255, 255, 0.08);
+  --chrome-ink: #e6ebf2;
+  --chrome-dim: #9daabb;
+  --chrome-hover: rgba(255, 255, 255, 0.05);
+  --chrome-active: rgba(255, 255, 255, 0.10);
+
+  --glass-fill: #19212f;
+  --glass-fill-strong: #202a3b;
+  --glass-edge: rgba(167, 178, 197, 0.18);
+  --glass-edge-strong: rgba(167, 178, 197, 0.30);
+  --glass-highlight: transparent;
+  --glass-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 1px 4px rgba(0, 0, 0, 0.4);
+  --glass-shadow-strong: 0 14px 40px rgba(0, 0, 0, 0.55);
+}
+
+@theme inline {
+  /* colors → Tailwind utilities (text-ink, bg-bg-0, border-line, …) */
+  --color-bg-0: var(--bg-0);
+  --color-bg-1: var(--bg-1);
+  --color-bg-2: var(--bg-2);
+  --color-bg-3: var(--bg-3);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fill-1: var(--fill-1);
+  --color-fill-2: var(--fill-2);
+  --color-fill-3: var(--fill-3);
+  --color-well: var(--well);
+  --color-accent: var(--accent);
+  --color-tone-ok: var(--tone-ok);
+  --color-tone-warn: var(--tone-warn);
+  --color-tone-bad: var(--tone-bad);
+  --color-tone-info: var(--tone-info);
+  --color-tone-neutral: var(--tone-neutral);
+  --color-tone-ok-ink: var(--tone-ok-ink);
+  --color-tone-warn-ink: var(--tone-warn-ink);
+  --color-tone-bad-ink: var(--tone-bad-ink);
+  --color-tone-info-ink: var(--tone-info-ink);
+  --color-tone-neutral-ink: var(--tone-neutral-ink);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-ink-on-vivid: var(--ink-on-vivid);
+  --color-tone-bad-contrast: var(--tone-bad-contrast);
+  /* state hues → text-st-owed / bg-st-due / border-st-meet … (consumed by the
+     assay-strip + chip kit; COLOR = STATE) */
+  --color-st-owed: var(--st-owed);
+  --color-st-due: var(--st-due);
+  --color-st-meet: var(--st-meet);
+  --color-st-ok: var(--st-ok);
+  --color-st-idle: var(--st-idle);
+  --color-chrome: var(--chrome);
+  --color-chrome-line: var(--chrome-line);
+  --color-chrome-ink: var(--chrome-ink);
+  --color-chrome-dim: var(--chrome-dim);
+  --color-chrome-hover: var(--chrome-hover);
+  --color-chrome-active: var(--chrome-active);
+
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+
+  /* radii → rounded-ctl / rounded-card / rounded-pane / rounded-modal */
+  --radius-ctl: var(--radius-ctl);
+  --radius-card: var(--radius-card);
+  --radius-pane: var(--radius-pane);
+  --radius-modal: var(--radius-modal);
+}
+
+@theme {
+  /* THE type scale — six steps, that's all. Now the CALIBRATED INSTRUMENT
+     "COMFORT" scale (operator-locked 2026-07-16): micro 11.5 · caption 13.5 ·
+     body 15.5 · title 19 · h1 30 · hero 46. The app's six roles map onto it —
+     display takes the h1 tier, hero takes the hero tier.
+     micro    11.5px  mono meta, timestamps, uppercase eyebrows (never prose)
+     caption  13.5px  secondary labels, table meta, chips
+     body     15.5px  default reading & control size
+     title    19px    page/section/dialog titles
+     display  30px    stat values / section h1
+     hero     46px    the mono headline counter (N NEED A REPLY) */
+  --text-micro: 11.5px;
+  --text-micro--line-height: 1.45;
+  --text-caption: 13.5px;
+  --text-caption--line-height: 1.45;
+  --text-body: 15.5px;
+  --text-body--line-height: 1.55;
+  --text-title: 19px;
+  --text-title--line-height: 1.35;
+  --text-display: 30px;
+  --text-display--line-height: 1.15;
+  --text-hero: 46px;
+  --text-hero--line-height: 1;
+}
+
+html {
+  background: var(--bg-0);
+  color-scheme: light;
+}
+html.night { color-scheme: dark; }
+
+body {
+  color: var(--ink);
+  font-family: var(--app-font-sans);
+  font-size: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* One consistent, high-contrast keyboard focus ring everywhere. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+/* pointer users don't get the ring; keyboard users always do */
+:focus:not(:focus-visible) { outline: none; }
+
+/* eyebrow label idiom — one class instead of 30 tracking-[0.NNem] one-offs.
+   FRONT OFFICE: eyebrows are the sans, bolder and quieter than the mono era. */
+.eyebrow {
+  font-family: var(--app-font-sans);
+  font-size: var(--text-micro);
+  font-weight: 700;
+  line-height: 1.45;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+
+/* stage/panel enter transition (respects reduced-motion below) */
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.panel-in { animation: panelIn 180ms var(--ease-glide) both; }
+
+/* ---- the field -----------------------------------------------------------
+   FRONT OFFICE: a flat, quiet canvas. No blooms, no gradients — the cards
+   carry the depth. (The element stays; several views mount it.) */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg-0);
+}
+
+/* ------------------------------ pane sheets ------------------------------
+   Kept class names from the glass era; the recipe is now a SOLID elevated
+   card — white surface, hairline border, soft shadow. Modals/tooltips use
+   the strong recipe (bigger shadow). No backdrop blur anywhere. */
+.glass {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+}
+.glass-strong {
+  background: var(--glass-fill-strong);
+  border: 1px solid var(--glass-edge-strong);
+  box-shadow: var(--glass-shadow-strong);
+}
+
+/* sheen retired — solid cards don't catch bench light. The class stays
+   because tiles set it; it must not repaint anything. */
+.sheen { overflow: hidden; }
+.sheen::after { content: none; }
+
+/* ---- rendered markdown (Vault file preview) --------------------------------
+   Styles for the hand-rolled markdown renderer's output. All colors are
+   tokens; type sits on the 6-step scale. */
+.md-body { color: var(--ink); font-size: var(--text-body); line-height: 1.65; }
+.md-body h1, .md-body h2, .md-body h3, .md-body h4 {
+  color: var(--ink); font-weight: 600; letter-spacing: -0.01em;
+  margin: 1.1em 0 0.45em; line-height: 1.3;
+}
+.md-body h1 { font-size: var(--text-display); margin-top: 0.2em; }
+.md-body h2 { font-size: var(--text-title); border-bottom: 1px solid var(--line); padding-bottom: 0.3em; }
+.md-body h3 { font-size: var(--text-body); }
+.md-body h4 { font-size: var(--text-caption); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-dim); }
+.md-body p { margin: 0.55em 0; }
+.md-body ul, .md-body ol { margin: 0.55em 0; padding-left: 1.4em; }
+.md-body ul { list-style: disc; }
+.md-body ol { list-style: decimal; }
+.md-body li { margin: 0.25em 0; }
+.md-body li::marker { color: var(--ink-faint); }
+.md-body a { color: var(--tone-info-ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--tone-info) 45%, transparent); text-underline-offset: 2px; }
+.md-body a:hover { text-decoration-color: var(--tone-info); }
+.md-body code {
+  font-family: var(--app-font-mono); font-size: 0.92em;
+  background: var(--fill-2); border-radius: 4px; padding: 0.1em 0.35em;
+}
+.md-body pre {
+  background: var(--well); border: 1px solid var(--line); border-radius: var(--radius-card);
+  padding: 10px 12px; overflow-x: auto; margin: 0.7em 0;
+}
+.md-body pre code { background: none; padding: 0; font-size: var(--text-caption); color: var(--ink-dim); }
+.md-body hr { border: 0; border-top: 1px solid var(--line); margin: 1.1em 0; }
+.md-body blockquote {
+  border-left: 2px solid var(--line-strong); color: var(--ink-dim);
+  margin: 0.7em 0; padding: 0.1em 0 0.1em 0.9em;
+}
+.md-body .md-scroll { overflow-x: auto; margin: 0.7em 0; }
+.md-body table { border-collapse: collapse; width: 100%; font-size: var(--text-caption); }
+.md-body th, .md-body td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; vertical-align: top; }
+.md-body th { color: var(--ink-dim); font-weight: 600; background: var(--fill-1); }
+.md-body strong { color: var(--ink); font-weight: 600; }
+
+/* ---- visible tooltip for icon-only controls (hover AND keyboard focus) ----
+   Usage: class="tip" + data-tip="label". Solid surface, never translucent. */
+.tip { position: relative; }
+.tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 40;
+  white-space: nowrap;
+  background: var(--bg-3);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: var(--text-caption);
+  line-height: 1.4;
+  box-shadow: var(--glass-shadow);
+  opacity: 0;
+  transform: translateY(-2px);
+  pointer-events: none;
+  transition: opacity 0.12s var(--ease-soft), transform 0.12s var(--ease-soft);
+}
+.tip:hover::after,
+.tip:focus-visible::after { opacity: 1; transform: none; }
+
+/* thin scrollbar for scrolling panes */
+.thin-scroll::-webkit-scrollbar { width: 8px; }
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: var(--fill-3); border-radius: 99px;
+}
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* ---- console typefaces (self-hosted latin woff2, /public/fonts) ---------
+   CALIBRATED INSTRUMENT: IBM Plex Sans 400/500/600 + IBM Plex Mono 400/500.
+   Self-hosted static weights — no runtime Google Fonts, no build-time fetch. */
+@font-face { font-family: "IBM Plex Sans"; src: url("/fonts/ibm-plex-sans-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("/fonts/ibm-plex-sans-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("/fonts/ibm-plex-sans-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+/* ---- board constructions (FRONT OFFICE 2026-07-12) -----------------------
+   Group headers are quiet uppercase sans labels over a single hairline —
+   the etched burette scale retired with the glass. Rows separate on
+   hairlines; colors ride the tokens so night follows for free. */
+.vk-group-h {
+  font-family: var(--app-font-sans);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+}
+.vk-group-h::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  align-self: center;
+  margin-left: 10px;
+  background: var(--line);
+}
+.vk-boardrow {
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* =========================================================================
+   CALIBRATED INSTRUMENT — shell + anatomy (Phase F foundation, 2026-07-17)
+   Ported from the design-tokens source, adapted to this app
+   token names (--chrome*, --bg-*, --text-*, --radius-*). The mockup's
+   [data-palette=trade] + [data-size=comfort] values are already baked into the
+   :root / html.night blocks above; these are the structural classes the
+   Sidebar, work drawer and kit anatomy consume.
+   ========================================================================= */
+
+/* ---- LEFT SIDEBAR shell (fixed navy rail; content clears it) ------------- */
+.app-main {
+  position: relative;
+  height: 100vh;
+  min-width: 0;
+  overflow: hidden;
+  margin-left: var(--side-w);
+}
+.side {
+  position: fixed; top: 0; left: 0; bottom: 0; width: var(--side-w); z-index: 30;
+  background: var(--chrome); color: var(--chrome-ink);
+  display: flex; flex-direction: column; padding: 16px 12px 14px;
+  border-right: 1px solid var(--chrome-line);
+}
+.side-brand { display: flex; align-items: center; gap: 10px; padding: 2px 8px 14px; }
+.side-brand .badge {
+  display: grid; place-items: center; width: 26px; height: 26px; flex-shrink: 0;
+  border-radius: 7px; background: var(--accent); color: var(--accent-contrast);
+  font-family: var(--app-font-sans); font-size: 14px; font-weight: 600;
+}
+.side-brand .mark { font-family: var(--app-font-sans); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--chrome-ink); line-height: 1.05; }
+.side-brand .micro {
+  font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--chrome-dim);
+}
+.side-nav { display: flex; flex-direction: column; gap: 2px; }
+.side-item {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 8px 11px; border: 0; background: none; cursor: pointer; text-align: left;
+  border-radius: var(--radius-ctl); color: var(--chrome-dim); text-decoration: none;
+  font: 500 13.5px var(--app-font-sans); position: relative;
+}
+.side-item .glyph { width: 18px; flex-shrink: 0; display: grid; place-items: center; line-height: 1; }
+.side-item:hover, .side-item:focus-visible { color: var(--chrome-ink); background: var(--chrome-hover); }
+.side-item[aria-current="page"] { color: var(--chrome-ink); background: var(--chrome-active); }
+.side-item[aria-current="page"]::before {
+  content: ""; position: absolute; left: -12px; top: 7px; bottom: 7px; width: 2px;
+  border-radius: 0 2px 2px 0; background: var(--accent);
+}
+.side-spacer { flex: 1 1 auto; min-height: 14px; }
+.side-foot { display: flex; flex-direction: column; gap: 4px; }
+.side-op { font-size: 10.5px; color: var(--chrome-dim); padding: 6px 11px 0; }
+
+/* work pill inside the navy field */
+.side .work-pill {
+  width: 100%; justify-content: flex-start; border-radius: var(--radius-ctl);
+  background: var(--chrome-hover); border: 1px solid var(--chrome-line); color: var(--chrome-dim);
+}
+.side .work-pill:hover, .side .work-pill:focus-visible { color: var(--chrome-ink); background: var(--chrome-active); }
+.side .work-pill .fail { color: #f0703f; font-weight: 500; }
+
+/* slim mobile top bar + slide-over backdrop (shown only <=760) */
+.topbar {
+  display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 30; height: var(--topbar-h);
+  align-items: center; gap: 12px; padding: 0 14px;
+  background: var(--chrome); color: var(--chrome-ink); border-bottom: 1px solid var(--chrome-line);
+}
+.topbar .burger {
+  width: 34px; height: 34px; display: grid; place-items: center; padding: 0;
+  border: 1px solid var(--chrome-line); border-radius: var(--radius-ctl);
+  background: var(--chrome-hover); color: var(--chrome-ink); font-size: 16px; cursor: pointer;
+}
+.topbar .mark { font-size: 15px; font-weight: 600; color: var(--chrome-ink); }
+.side-backdrop { display: none; position: fixed; inset: 0; background: rgba(8, 12, 18, 0.5); z-index: 40; }
+
+/* >=761 & <=1024: collapse to a 56px icon rail; labels become title tooltips */
+@media (max-width: 1024px) and (min-width: 761px) {
+  :root { --side-w: 56px; }
+  .side { padding: 14px 6px; }
+  .side-brand { justify-content: center; padding: 2px 0 12px; }
+  .side-brand .mark, .side-brand .micro, .side-op { display: none; }
+  .side-item { justify-content: center; gap: 0; padding: 9px 0; }
+  .side-item .label, .side .work-pill .wp-label { display: none; }
+  .side-item[aria-current="page"]::before { left: -6px; }
+  .side .work-pill { justify-content: center; padding: 6px 0; }
+}
+
+/* <=760: sidebar becomes an off-canvas slide-over behind a slim top bar */
+@media (max-width: 760px) {
+  .app-main { margin-left: 0; padding-top: var(--topbar-h); }
+  .topbar { display: flex; }
+  .side {
+    width: 244px; z-index: 41; transform: translateX(-100%);
+    transition: transform 160ms ease-out; box-shadow: 6px 0 26px rgba(8, 12, 18, 0.4);
+  }
+  .side[data-open="true"] { transform: translateX(0); }
+  .side-backdrop[data-open="true"] { display: block; }
+}
+
+/* ---- assay strip — the signature row (3px left state strip helper) ------- */
+.assay-strip { position: relative; }
+.assay-strip::before {
+  content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px;
+  border-radius: 2px; background: var(--row-hue, var(--st-idle));
+}
+.hue-owed { --row-hue: var(--st-owed); } .hue-due  { --row-hue: var(--st-due); }
+.hue-meet { --row-hue: var(--st-meet); } .hue-ok   { --row-hue: var(--st-ok); }
+.hue-idle { --row-hue: var(--st-idle); }
+
+/* ---- state chips — squared, tinted; the color carriers besides strips ---- */
+.chip {
+  display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;
+  font-size: var(--text-micro); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em;
+  padding: 2px 8px; border-radius: var(--radius-ctl);
+  color: var(--chip-hue, var(--st-idle));
+  background: color-mix(in srgb, var(--chip-hue, var(--st-idle)) calc(var(--chip-alpha) * 100%), transparent);
+}
+.chip-owed { --chip-hue: var(--st-owed); } .chip-due  { --chip-hue: var(--st-due); }
+.chip-meet { --chip-hue: var(--st-meet); } .chip-ok   { --chip-hue: var(--st-ok); }
+.chip-idle { --chip-hue: var(--st-idle); }
+
+/* ---- mono-tabular readout + ladder pips --------------------------------- */
+.readout { font-family: var(--app-font-mono); font-variant-numeric: tabular-nums; }
+.pips {
+  font-family: var(--app-font-mono); font-variant-numeric: tabular-nums;
+  font-size: calc(var(--text-micro) + 0.5px); letter-spacing: 2px;
+  color: var(--pip-hue, var(--st-idle));
+}
+
+/* ---- eyebrow section header (label + mono count + optional hint) --------- */
+.assay-eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--app-font-sans);
+  font-size: var(--text-micro); font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-dim);
+}
+.assay-eyebrow .readout { font-size: calc(var(--text-micro) + 0.5px); color: var(--ink); }
+.assay-eyebrow .rule { flex: 1; height: 1px; background: var(--line); }
+
+/* ---- ? hint — hover/focus teaching card, keyboard accessible ------------- */
+.hint { position: relative; display: inline-flex; vertical-align: middle; }
+.hint > button {
+  width: 17px; height: 17px; border-radius: 50%; border: 1px solid var(--line-strong);
+  background: none; color: var(--ink-dim); font: 600 var(--text-micro) var(--app-font-sans);
+  cursor: help; display: grid; place-items: center; padding: 0; line-height: 1;
+}
+.hint > .hint-card {
+  display: none; position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  width: 240px; z-index: 70; background: var(--bg-3); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card); box-shadow: var(--glass-shadow-strong);
+  padding: 9px 11px; font-size: var(--text-caption); color: var(--ink-dim); text-align: left;
+  text-transform: none; letter-spacing: normal; font-weight: 400; line-height: 1.45;
+}
+.hint:hover > .hint-card, .hint:focus-within > .hint-card { display: block; }
+
+/* ---- Today rail assay row (Phase T) — one line at rest, gist on hover -----
+   THE signature row of the cockpit rail: 3px state strip (via .assay-strip +
+   .hue-*), domain, one chip, mono age. The email gist is an absolutely-placed
+   card that appears ONLY on hover/keyboard-focus (aria-hidden — the row's own
+   aria-label carries company; state; age). Nothing crushes the list at rest. */
+.vk-railrow {
+  position: relative; display: flex; align-items: center; gap: 9px; width: 100%;
+  padding: 6px 9px 6px 12px; border: 0; background: none; text-align: left; cursor: pointer;
+  border-radius: var(--radius-ctl); color: var(--ink);
+  font-family: var(--app-font-sans); font-size: var(--text-body);
+}
+.vk-railrow:hover, .vk-railrow:focus-visible { background: var(--fill-1); }
+.vk-railrow[aria-current="true"] { background: var(--fill-2); outline: 1px solid var(--line-strong); outline-offset: -1px; }
+.vk-railrow .rr-who { font-weight: 500; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vk-railrow .rr-age {
+  margin-left: auto; flex-shrink: 0; color: var(--ink-dim);
+  font-family: var(--app-font-mono); font-variant-numeric: tabular-nums; font-size: calc(var(--text-caption) - 0.5px);
+}
+.vk-railrow .rr-gist {
+  display: none; position: absolute; left: 12px; right: 9px; top: calc(100% - 2px); z-index: 30;
+  background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-ctl);
+  padding: 6px 9px; font-size: var(--text-caption); color: var(--ink-dim);
+  box-shadow: var(--glass-shadow-strong);
+}
+.vk-railrow:hover .rr-gist, .vk-railrow:focus-visible .rr-gist { display: block; }
+
+/* ---- background-work pill + fixed overlay drawer (NEVER a flex sibling) --- */
+.work-pill {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  border: 1px solid var(--line-strong); background: var(--bg-2); color: var(--ink-dim);
+  font-family: var(--app-font-mono); font-variant-numeric: tabular-nums;
+  font-size: calc(var(--text-caption) - 0.5px); padding: 4px 10px; border-radius: var(--radius-ctl);
+}
+.work-pill .fail { color: var(--st-owed); font-weight: 500; }
+.work-drawer-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(360px, 92vw); z-index: 50;
+  background: var(--bg-2); border-left: 1px solid var(--line-strong);
+  box-shadow: -12px 0 30px rgba(10, 20, 30, 0.18); overflow-y: auto;
+}
